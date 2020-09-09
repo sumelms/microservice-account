@@ -15,9 +15,21 @@
   </a>
 </p>
 
-## User Microservice
+## About Sumé LMS
 
-This repository contains the user microservice of the Sumé LMS. If you are looking for more information about the application, we strongly recommend you to [check the documentation](https://www.sumelms.com/docs).
+> Note: This repository contains the **user microservice** of the Sumé LMS. If you are looking for more information about the application, we strongly recommend you to [check the documentation](https://www.sumelms.com/docs).
+
+Sumé LMS is a modern and open-source learning management system that uses modern technologies to deliver performance and scalability to your learning environment.
+
+  * Compatible with SCORM and xAPI (TinCan)
+  * Flexible and modular
+  * Open-source and Free
+  * Fast and modern
+  * Easy to install and run
+  * Designed for microservices
+  * REST API based application
+  * and more.
+
 
 ## Table of Contents
 
