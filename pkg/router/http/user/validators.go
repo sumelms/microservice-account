@@ -7,10 +7,10 @@ import (
 )
 
 type CreateUserValidator struct {
-	Username        string `json:"username" validate:"required"`
-	Email           string `json:"email" validate:"required,email"`
-	Password        string `json:"password" validate:"required,eqfield=ConfirmPassword"`
-	ConfirmPassword string `json:"confirm_password" validate:"required`
+	Username        string `http:"username" validate:"required"`
+	Email           string `http:"email" validate:"required,email"`
+	Password        string `http:"password" validate:"required,eqfield=ConfirmPassword"`
+	ConfirmPassword string `http:"confirm_password" validate:"required`
 }
 
 func BindCreateUser(c echo.Context) (*domain.User, error) {
@@ -34,9 +34,9 @@ func BindCreateUser(c echo.Context) (*domain.User, error) {
 }
 
 type UpdateUserValidator struct {
-	Email           string `json:"email", validate:"required,email"`
-	Password        string `json:"password" validate:"eqfield=ConfirmPassword"`
-	ConfirmPassword string `json:"confirm_password" validate="required_with=Password"`
+	Email           string `http:"email", validate:"required,email"`
+	Password        string `http:"password" validate:"eqfield=ConfirmPassword"`
+	ConfirmPassword string `http:"confirm_password" validate="required_with=Password"`
 }
 
 func BindUpdateUser(c echo.Context) (*domain.User, error) {

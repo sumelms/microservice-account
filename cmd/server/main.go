@@ -1,9 +1,9 @@
 package main
 
-import router "github.com/sumelms/sumelms/user/pkg/router/json"
+import "github.com/sumelms/sumelms/user/pkg/router/http"
 
 func main() {
-	s, err := router.NewRouter()
+	s, err := http.NewHttpServer()
 	if err != nil {
 		panic(err)
 	}

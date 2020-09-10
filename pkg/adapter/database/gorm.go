@@ -13,8 +13,7 @@ func Connect(cfg *config.Database) (*gorm.DB, error) {
 		"host=%s port=%s dbname=%s user=%s password=%s sslmode=disable",
 		cfg.Host, cfg.Port, cfg.DB, cfg.User, cfg.Password)
 
-	// @TODO Allow change the database type to other gorm dialects
-	db, err := gorm.Open("postgres", connString)
+	db, err := gorm.Open(cfg.Driver, connString)
 	if err != nil {
 		return nil, err
 	}

@@ -1,4 +1,4 @@
-package json
+package http
 
 import (
 	"github.com/jinzhu/gorm"
@@ -11,50 +11,15 @@ import (
 	"github.com/sumelms/sumelms/user/pkg/config"
 	"github.com/sumelms/sumelms/user/pkg/context"
 	"github.com/sumelms/sumelms/user/pkg/domain/user"
-	handler "github.com/sumelms/sumelms/user/pkg/router/json/user"
+	handler "github.com/sumelms/sumelms/user/pkg/router/http/user"
 )
 
-type router struct {
+type server struct {
 	db  *gorm.DB
 	cfg *config.Config
 }
 
-func (r router) Start() error {
-	e := echo.New()
-
-	e.Use(middleware.CORS())
-
-	e.Use(func(next echo.HandlerFunc) echo.HandlerFunc {
-		userRepository := storage.NewRepository(r.db)
-		userService := user.NewService(userRepository)
-
-		return func(c echo.Context) error {
-			cc := &context.Context{
-				Context: c,
-				Service: userService,
-			}
-			return next(cc)
-		}
-	})
-
-	// TODO Error router
-
-	e.Validator = validator.NewValidator()
-
-	handler.NewHandler(e)
-
-	if err := e.Start(r.cfg.GetPort()); err != nil {
-		err = errors.Wrap(err, "Unable to start the server")
-		e.Logger.Error(err)
-		return err
-	}
-
-	defer r.db.Close()
-
-	return nil
-}
-
-func NewRouter() (*router, error) {
+func NewHttpServer() (*server, error) {
 	cfg, err := config.NewConfig()
 	if err != nil {
 		err = errors.Wrap(err, "Unable to load the configuration")
@@ -67,8 +32,43 @@ func NewRouter() (*router, error) {
 		return nil, err
 	}
 
-	return &router{
+	return &server{
 		db:  db,
 		cfg: cfg,
 	}, nil
+}
+
+func (s server) Start() error {
+	e := echo.New()
+
+	e.Use(middleware.CORS())
+
+	e.Use(func(next echo.HandlerFunc) echo.HandlerFunc {
+		userRepository := storage.NewRepository(s.db)
+		userService := user.NewService(userRepository)
+
+		return func(c echo.Context) error {
+			cc := &context.Context{
+				Context: c,
+				Service: userService,
+			}
+			return next(cc)
+		}
+	})
+
+	// TODO Error handler
+
+	e.Validator = validator.NewValidator()
+
+	handler.NewHandler(e)
+
+	if err := e.Start(s.cfg.GetPort()); err != nil {
+		err = errors.Wrap(err, "Unable to start the server")
+		e.Logger.Error(err)
+		return err
+	}
+
+	defer s.db.Close()
+
+	return nil
 }

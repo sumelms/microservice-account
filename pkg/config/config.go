@@ -11,6 +11,7 @@ type Config struct {
 }
 
 type Database struct {
+	Driver   string
 	Host     string
 	Port     string
 	User     string
@@ -20,16 +21,20 @@ type Database struct {
 
 func NewConfig() (*Config, error) {
 	port := os.Getenv("PORT")
-
-	// set default PORT if missing
 	if port == "" {
 		port = "8080"
+	}
+
+	driver := os.Getenv("DATABASE_DRIVER")
+	if driver == "" {
+		driver = "postgres"
 	}
 
 	return &Config{
 		Environment: os.Getenv("ENV"),
 		Port:        port,
 		Database: &Database{
+			Driver:   driver,
 			Host:     os.Getenv("DATABASE_HOST"),
 			Port:     os.Getenv("DATABASE_PORT"),
 			User:     os.Getenv("DATABASE_USER"),
