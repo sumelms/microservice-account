@@ -10,6 +10,7 @@ require (
 	github.com/labstack/echo v3.3.10+incompatible
 	github.com/labstack/gommon v0.3.0 // indirect
 	github.com/pkg/errors v0.9.1
+	github.com/sherifabdlnaby/configuro v0.0.2
 	github.com/vmihailenco/msgpack v3.3.3+incompatible
 	google.golang.org/appengine v1.6.6 // indirect
 )

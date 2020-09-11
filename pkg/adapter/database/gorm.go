@@ -11,7 +11,7 @@ import (
 func Connect(cfg *config.Database) (*gorm.DB, error) {
 	connString := fmt.Sprintf(
 		"host=%s port=%s dbname=%s user=%s password=%s sslmode=disable",
-		cfg.Host, cfg.Port, cfg.DB, cfg.User, cfg.Password)
+		cfg.Host, cfg.Port, cfg.Database, cfg.Username, cfg.Password)
 
 	db, err := gorm.Open(cfg.Driver, connString)
 	if err != nil {

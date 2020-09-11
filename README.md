@@ -115,7 +115,7 @@ If you want to run the microservice using Docker, the easiest way to do it is se
 here is a basic example for a `docker-compose.yml` file:
 
 ```bash
-# sumelmes/microservice-user/docker-compose.yaml
+# sumelmes/microservice-user/docker-compose.yml
 version: '3'
 services:
   microservice:
@@ -161,20 +161,19 @@ so, you just need to run the following command:
 $ docker-composer up
 ```
 
-Keep in mind that it will load the `config/config.yaml` file from the project. If you want to change some 
+Keep in mind that it will load the `config/config.yml` file from the project. If you want to change some 
 configurations you can set the environment variables in your `docker-compose.yml` file, or edit the configuration file.
 
 ## Configuring
 
-You can easily configure the application editing the `config/config.yaml` file or using environment variables. We do 
+You can easily configure the application editing the `config/config.yml` file or using environment variables. We do 
 strongly recommend that you use the configuration file instead of the environment variables. Again, it is up to you 
 to decide. If you want to use the variables, be sure to prefix it all with `SUMELMS_`. 
 
 The list of the environment variables and it's default values:
 
 ```bash
-SUMELMS_ENV = "development"
-SUMELMS_HTTP_PORT = 8080
+SUMELMS_SERVER_HTTP_PORT = 8080
 SUMELMS_DATABASE_DRIVER = "postgres"
 SUMELMS_DATABASE_HOST = "localhost"
 SUMELMS_DATABASE_PORT = 5432
@@ -182,6 +181,9 @@ SUMELMS_DATABASE_USER = nil
 SUMELMS_DATABASE_PASSWORD = nil
 SUMELMS_DATABASE_DATABASE = "sumelms_user"
 ```
+
+> We are using [configuro](https://github.com/sherifabdlnaby/configuro) to manage the configuration, so the precedence 
+> order to configuration is: *Environment variables > .env > Config File > Value set in Struct before loading.*
 
 ## Testing
 

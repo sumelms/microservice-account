@@ -1,49 +1,59 @@
 package config
 
 import (
+	"github.com/pkg/errors"
+	"github.com/sherifabdlnaby/configuro"
 	"os"
 )
 
 type Config struct {
-	Environment string
-	Port        string
-	Database    *Database
+	Server struct {
+		Http *Server
+	}
+	Database *Database
+	Logger   Logger
 }
 
 type Database struct {
 	Driver   string
 	Host     string
 	Port     string
-	User     string
-	DB       string
+	Username string
 	Password string
+	Database string
+}
+
+type Server struct {
+	Host string
+}
+
+type Logger struct {
+	Level string
+	Debug bool
 }
 
 func NewConfig() (*Config, error) {
-	port := os.Getenv("PORT")
-	if port == "" {
-		port = "8080"
+	configPath := os.Getenv("SUMELMS_CONFIG_PATH")
+	if configPath == "" {
+		return nil, errors.New("SUMELMS_CONFIG_PATH can not be empty.")
 	}
 
-	driver := os.Getenv("DATABASE_DRIVER")
-	if driver == "" {
-		driver = "postgres"
+	if _, err := os.Stat(configPath); os.IsNotExist(err) {
+		return nil, errors.Wrapf(err, "Config file does not exists in %s", configPath)
 	}
 
-	return &Config{
-		Environment: os.Getenv("ENV"),
-		Port:        port,
-		Database: &Database{
-			Driver:   driver,
-			Host:     os.Getenv("DATABASE_HOST"),
-			Port:     os.Getenv("DATABASE_PORT"),
-			User:     os.Getenv("DATABASE_USER"),
-			DB:       os.Getenv("DATABASE_DB"),
-			Password: os.Getenv("DATABASE_PASSWORD"),
-		},
-	}, nil
-}
+	loader, err := configuro.NewConfig(
+		configuro.WithLoadFromConfigFile(configPath, false),
+		configuro.WithLoadFromEnvVars("SUMELMS_"))
+	if err != nil {
+		return nil, err
+	}
 
-func (c *Config) GetPort() string {
-	return ":" + c.Port
+	config := &Config{}
+
+	if err := loader.Load(config); err != nil {
+		return nil, err
+	}
+
+	return config, nil
 }

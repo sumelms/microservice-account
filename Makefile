@@ -3,6 +3,7 @@ DOCKERHUB_NAMESPACE ?= sumelms
 IMAGE := ${DOCKERHUB_NAMESPACE}/user:${VERSION}
 
 run:
+	export SUMELMS_CONFIG_PATH="./config/config.yml" && \
 	go run cmd/server/main.go
 
 build:

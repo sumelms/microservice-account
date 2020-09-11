@@ -62,7 +62,7 @@ func (s server) Start() error {
 
 	handler.NewHandler(e)
 
-	if err := e.Start(s.cfg.GetPort()); err != nil {
+	if err := e.Start(s.cfg.Server.Http.Host); err != nil {
 		err = errors.Wrap(err, "Unable to start the server")
 		e.Logger.Error(err)
 		return err
