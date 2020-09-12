@@ -3,8 +3,8 @@ server:
     host: ":8080"
 database:
   driver: postgres
-  host: localhost
+  host: postgres
   port: 5432
   username: postgres
   password: password
-  database: sumelms_users
+  database: postgres

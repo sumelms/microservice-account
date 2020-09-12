@@ -35,7 +35,7 @@ type Logger struct {
 func NewConfig() (*Config, error) {
 	configPath := os.Getenv("SUMELMS_CONFIG_PATH")
 	if configPath == "" {
-		return nil, errors.New("SUMELMS_CONFIG_PATH can not be empty.")
+		configPath = "./config.yml"
 	}
 
 	if _, err := os.Stat(configPath); os.IsNotExist(err) {
@@ -44,7 +44,7 @@ func NewConfig() (*Config, error) {
 
 	loader, err := configuro.NewConfig(
 		configuro.WithLoadFromConfigFile(configPath, false),
-		configuro.WithLoadFromEnvVars("SUMELMS_"))
+		configuro.WithLoadFromEnvVars("SUMELMS"))
 	if err != nil {
 		return nil, err
 	}

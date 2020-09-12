@@ -109,60 +109,43 @@ Then you can run it, you just need to execute the following command:
 $ make run
 ```
 
+Once it is running you can test it: http://localhost:8080/users
+
 ### Docker run
 
-If you want to run the microservice using Docker, the easiest way to do it is setting it up with `docker-compose`, 
-here is a basic example for a `docker-compose.yml` file:
+If you want to run the microservice using Docker, the easiest way to do it is using docker swarm. 
+
+First you need to initialize the docker swarm
 
 ```bash
-# sumelmes/microservice-user/docker-compose.yml
-version: '3'
-services:
-  microservice:
-    container_name: microservice-user
-    build: sumelms/sumelms-user
-    ports: 
-      - 8080:8080 
-    restart: on-failure
-    volumes:
-      - sumelms_user:/usr/src/sumelms-user/
-    depends_on:
-      - postgres
-    networks:
-      - sumelms
-
-  postgres:
-    image: postgres:latest
-    container_name: microservice-user-postgres
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=password
-      - POSTGRES_DB=microservice_user
-    ports:
-      - '5432:5432'
-    volumes:
-      - database_postgres:/var/lib/postgresql/data
-    networks:
-      - sumelms
-
-volumes:
-  microservice:
-  database_postgres:                  
-
-networks:
-  sumelms:
-    driver: bridge
-```
-
-You don't need to create this file inside the project folder, but in order to simplify it, let assume that you did it, 
-so, you just need to run the following command:
-
-```bash
-$ docker-composer up
+$ docker swarm init
 ```
 
 Keep in mind that it will load the `config/config.yml` file from the project. If you want to change some 
 configurations you can set the environment variables in your `docker-compose.yml` file, or edit the configuration file.
+
+Once initialized you need to deploy your containers:
+
+```bash
+$ docker stack deploy -c docker-compose.yml sumelms
+```
+
+That is it, if everything works it should be now running. You can check it using the following command:
+
+```bash
+$ docker service ls
+```
+
+If the services are correctly working you should see two containers running with 1 replica each. Now, you need to get 
+the IP address to access the microservice. In order to do it, you can use the following command:
+
+```bash
+$ docker system info | grep "Node Address"
+```
+
+Once you have the IP address you can now access the endpoint: http://<docker-ip>:8080/users
+
+> NOTE: You can remove/shutdown the deployment with: ```$ docker stack rm sumelms```
 
 ## Configuring
 
@@ -210,8 +193,6 @@ all make sure to read our [Contributor Guideline](https://www.sumelms.com/docs/c
 ...
 
 ## Support
-
-Do you need any help? 
 
 ### Discussion
 

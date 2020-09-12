@@ -1,6 +1,6 @@
 VERSION := $(shell git describe --tags --exact-match 2>/dev/null || echo latest)
 DOCKERHUB_NAMESPACE ?= sumelms
-IMAGE := ${DOCKERHUB_NAMESPACE}/user:${VERSION}
+IMAGE := ${DOCKERHUB_NAMESPACE}/microservice-user:${VERSION}
 
 run:
 	export SUMELMS_CONFIG_PATH="./config/config.yml" && \
