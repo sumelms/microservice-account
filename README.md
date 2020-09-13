@@ -61,7 +61,7 @@ $ git clone [git@github.com](mailto:git@github.com):sumelms/microservice-user.gi
 Access the project folder, and download the Go dependencies
 
 ```bash
-$ go get
+$ go get ./...
 ```
 
 It may take a while to download all the dependencies, then you are [ready to build](#building).
@@ -102,8 +102,9 @@ OK! Now you build it you need to run the microservice. That should also be prett
 
 ### Local run
 
-If you want to run the microservice locally, you may need to first [configure it](#configuring). 
-Then you can run it, you just need to execute the following command:
+If you want to run the microservice locally, you may need to have a **Postgres** instance running and accessible 
+from your machine, and you may need to first [configure it](#configuring). Then you can run it, you just need to 
+execute the following command:
 
 ```bash
 $ make run
