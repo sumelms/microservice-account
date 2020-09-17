@@ -3,7 +3,7 @@ package http
 import (
 	"context"
 	"encoding/json"
-	"github.com/sumelms/sumelms/microservice-user/pkg/endpoint"
+	"github.com/sumelms/microservice-user/pkg/endpoint"
 	"net/http"
 
 	httptransport "github.com/go-kit/kit/transport/http"

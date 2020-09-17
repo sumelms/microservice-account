@@ -4,7 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 
-	"github.com/sumelms/sumelms/microservice-user/pkg/config"
+	"github.com/sumelms/microservice-user/pkg/config"
 
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 )

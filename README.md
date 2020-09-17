@@ -203,7 +203,7 @@ find help and get in touch with the community.
 ### Bugs or feature requests
 
 If you found a bug or have a feature request, the best way to do 
-it is [opening an issue](https://github.com/sumelms/sumelms/issues).
+it is [opening an issue](https://github.com/sumelms/issues).
 
 ## License
 

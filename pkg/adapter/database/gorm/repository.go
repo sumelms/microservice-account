@@ -3,7 +3,7 @@ package gorm
 import (
 	"github.com/jinzhu/gorm"
 	"github.com/pkg/errors"
-	domain "github.com/sumelms/sumelms/microservice-user/pkg/domain"
+	domain "github.com/sumelms/microservice-user/pkg/domain"
 )
 
 type Repository struct {

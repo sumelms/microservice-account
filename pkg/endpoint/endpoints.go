@@ -2,7 +2,7 @@ package endpoint
 
 import (
 	"context"
-	"github.com/sumelms/sumelms/microservice-user/pkg/domain"
+	"github.com/sumelms/microservice-user/pkg/domain"
 
 	"github.com/go-kit/kit/endpoint"
 )

@@ -3,7 +3,7 @@ package sql
 import (
 	"context"
 	"database/sql"
-	"github.com/sumelms/sumelms/microservice-user/pkg/domain"
+	"github.com/sumelms/microservice-user/pkg/domain"
 
 	"github.com/go-kit/kit/log"
 )

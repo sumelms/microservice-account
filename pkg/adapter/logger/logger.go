@@ -3,7 +3,7 @@ package logger
 import (
 	"os"
 
-	"github.com/sumelms/sumelms/microservice-user/pkg/config"
+	"github.com/sumelms/microservice-user/pkg/config"
 
 	"github.com/go-kit/kit/log"
 )

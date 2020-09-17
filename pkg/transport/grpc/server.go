@@ -3,8 +3,8 @@ package grpc
 import (
 	"context"
 	"github.com/go-kit/kit/transport/grpc"
-	"github.com/sumelms/sumelms/microservice-user/pkg/endpoint"
-	"github.com/sumelms/sumelms/microservice-user/proto"
+	"github.com/sumelms/microservice-user/pkg/endpoint"
+	"github.com/sumelms/microservice-user/proto"
 )
 
 type server struct {
