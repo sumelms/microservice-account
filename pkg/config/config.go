@@ -1,14 +1,17 @@
 package config
 
 import (
+	"os"
+
 	"github.com/pkg/errors"
 	"github.com/sherifabdlnaby/configuro"
-	"os"
 )
 
 type Config struct {
-	Server struct {
+	Service string // Service name
+	Server  struct {
 		Http *Server
+		Grpc *Server
 	}
 	Database *Database
 	Logger   Logger

@@ -10,7 +10,7 @@ import (
 	"github.com/sumelms/sumelms/user/pkg/adapter/validator"
 	"github.com/sumelms/sumelms/user/pkg/config"
 	"github.com/sumelms/sumelms/user/pkg/context"
-	"github.com/sumelms/sumelms/user/pkg/domain/user"
+	"github.com/sumelms/sumelms/user/pkg/domain"
 	handler "github.com/sumelms/sumelms/user/pkg/router/http/user"
 )
 
@@ -45,7 +45,7 @@ func (s server) Start() error {
 
 	e.Use(func(next echo.HandlerFunc) echo.HandlerFunc {
 		userRepository := storage.NewRepository(s.db)
-		userService := user.NewService(userRepository)
+		userService := domain.NewService(userRepository)
 
 		return func(c echo.Context) error {
 			cc := &context.Context{

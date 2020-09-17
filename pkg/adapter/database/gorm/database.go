@@ -1,11 +1,11 @@
-package database
+package gorm
 
 import (
 	"fmt"
 
 	"github.com/jinzhu/gorm"
-	_ "github.com/jinzhu/gorm/dialects/postgres"
-	"github.com/sumelms/sumelms/user/pkg/config"
+	_ "github.com/jinzhu/gorm/dialects/postgres" // database driver
+	"github.com/sumelms/sumelms/microservice-user/pkg/config"
 )
 
 func Connect(cfg *config.Database) (*gorm.DB, error) {

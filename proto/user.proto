@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+package proto;
+
+service User {
+  rpc CreateUser(CreateUserRequest) returns (CreateUserResponse) {}
+  rpc GetUser(GetUserRequest) returns (GetUserResponse) {}
+  rpc UpdateUser(UpdateUserRequest) returns (UpdateUserResponse) {}
+  rpc DeleteUser(DeleteUserRequest) returns (DeleteUserResponse) {}
+  rpc ListUsers(ListUsersRequest) returns (ListUsersResponse) {}
+}
+
+message CreateUserRequest {}
+message CreateUserResponse {}
+
+message GetUserRequest {}
+message GetUserResponse {}
+
+message UpdateUserRequest {}
+message UpdateUserResponse {}
+
+message DeleteUserRequest {}
+message DeleteUserResponse {}
+
+message ListUsersRequest {}
+message ListUsersResponse {}

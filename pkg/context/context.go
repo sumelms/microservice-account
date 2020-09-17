@@ -2,10 +2,10 @@ package context
 
 import (
 	"github.com/labstack/echo"
-	"github.com/sumelms/sumelms/user/pkg/domain/user"
+	"github.com/sumelms/sumelms/user/pkg/domain"
 )
 
 type Context struct {
 	echo.Context
-	Service user.Service
+	Service domain.Service
 }

@@ -1,4 +1,4 @@
-package user
+package domain
 
 type Repository interface {
 	Store(user *User) (*User, error)

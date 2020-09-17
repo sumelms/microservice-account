@@ -1,9 +1,9 @@
-package user
+package gorm
 
 import (
 	"github.com/jinzhu/gorm"
 	"github.com/pkg/errors"
-	domain "github.com/sumelms/sumelms/user/pkg/domain/user"
+	domain "github.com/sumelms/sumelms/microservice-user/pkg/domain"
 )
 
 type Repository struct {
@@ -48,7 +48,7 @@ func (r Repository) Update(entity *domain.User) (*domain.User, error) {
 	// FIXME Can we improve the update process?
 	var user User
 
-	id := entity.ID.String()
+	id := entity.ID
 	query := r.db.Where("id = ?", id).First(&user)
 
 	if query.RecordNotFound() {

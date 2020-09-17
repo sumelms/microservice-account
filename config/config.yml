@@ -1,6 +1,9 @@
+service: "sumelms-user"
 server:
   http:
     host: ":8080"
+  grpc:
+    host: ":8081"
 database:
   driver: postgres
   host: postgres

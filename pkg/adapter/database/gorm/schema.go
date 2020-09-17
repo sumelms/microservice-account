@@ -1,13 +1,14 @@
-package user
+package gorm
 
 import (
+	"time"
+
 	"github.com/google/uuid"
 	"github.com/jinzhu/gorm"
-	"time"
 )
 
 type User struct {
-	ID          uuid.UUID `gorm:"type:uuid;primary_key;"`
+	ID          string `gorm:"type:uuid;primary_key;"`
 	Username    string
 	Email       string `gorm:"unique;index;"`
 	Password    string
@@ -18,7 +19,8 @@ type User struct {
 }
 
 func (user User) BeforeCreate(scope *gorm.Scope) error {
-	err := scope.SetColumn("ID", uuid.New())
+	id := uuid.New().String()
+	err := scope.SetColumn("ID", id)
 	if err != nil {
 		return err
 	}

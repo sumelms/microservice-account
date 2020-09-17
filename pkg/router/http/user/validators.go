@@ -3,7 +3,7 @@ package user
 import (
 	"github.com/google/uuid"
 	"github.com/labstack/echo"
-	domain "github.com/sumelms/sumelms/user/pkg/domain/user"
+	domain2 "github.com/sumelms/sumelms/user/pkg/domain"
 )
 
 type CreateUserValidator struct {
@@ -13,7 +13,7 @@ type CreateUserValidator struct {
 	ConfirmPassword string `http:"confirm_password" validate:"required`
 }
 
-func BindCreateUser(c echo.Context) (*domain.User, error) {
+func BindCreateUser(c echo.Context) (*domain2.User, error) {
 	entity := new(CreateUserValidator)
 
 	if err := c.Bind(entity); err != nil {
@@ -24,7 +24,7 @@ func BindCreateUser(c echo.Context) (*domain.User, error) {
 		return nil, err
 	}
 
-	user := &domain.User{
+	user := &domain2.User{
 		Username: entity.Username,
 		Email:    entity.Email,
 		Password: entity.Password,
@@ -39,7 +39,7 @@ type UpdateUserValidator struct {
 	ConfirmPassword string `http:"confirm_password" validate="required_with=Password"`
 }
 
-func BindUpdateUser(c echo.Context) (*domain.User, error) {
+func BindUpdateUser(c echo.Context) (*domain2.User, error) {
 	entity := new(UpdateUserValidator)
 
 	if err := c.Bind(entity); err != nil {
@@ -53,7 +53,7 @@ func BindUpdateUser(c echo.Context) (*domain.User, error) {
 	// The URL param
 	id := c.Param("id")
 
-	user := &domain.User{
+	user := &domain2.User{
 		ID:    uuid.MustParse(id),
 		Email: entity.Email,
 	}
