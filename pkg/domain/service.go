@@ -1,28 +1,31 @@
 package domain
 
 import (
+	"context"
+	"github.com/go-kit/kit/log"
 	"github.com/pkg/errors"
 )
 
 type Service interface {
-	CreateUser(user *User) (*User, error)
-	GetUserByID(id string) (*User, error)
-	UpdateUser(user *User) (*User, error)
-	DeleteUser(id string) error
-	ListUsers() ([]User, error)
+	CreateUser(ctx context.Context, user *User) (*User, error)
+	GetUser(ctx context.Context, id string) (*User, error)
+	UpdateUser(ctx context.Context, user *User) (*User, error)
+	DeleteUser(ctx context.Context, id string) error
+	ListUsers(ctx context.Context) ([]User, error)
 }
 
 type userService struct {
-	repo Repository
+	repo   Repository
+	logger log.Logger
 }
 
-func NewService(repository Repository) *userService {
+func NewService(repository Repository, logger log.Logger) *userService {
 	return &userService{
 		repo: repository,
 	}
 }
 
-func (s userService) CreateUser(user *User) (*User, error) {
+func (s userService) CreateUser(_ context.Context, user *User) (*User, error) {
 	user, err := s.repo.Store(user)
 	if err != nil {
 		return nil, errors.Wrap(err, "Service.CreateUser")
@@ -30,7 +33,7 @@ func (s userService) CreateUser(user *User) (*User, error) {
 	return user, nil
 }
 
-func (s userService) GetUserByID(id string) (*User, error) {
+func (s userService) GetUser(_ context.Context, id string) (*User, error) {
 	user, err := s.repo.GetByID(id)
 	if err != nil {
 		return nil, errors.Wrap(err, "Service.GetUserByID")
@@ -38,7 +41,7 @@ func (s userService) GetUserByID(id string) (*User, error) {
 	return user, nil
 }
 
-func (s userService) UpdateUser(user *User) (*User, error) {
+func (s userService) UpdateUser(_ context.Context, user *User) (*User, error) {
 	updated, err := s.repo.Update(user)
 	if err != nil {
 		return nil, errors.Wrap(err, "Service.UpdateUser")
@@ -46,7 +49,7 @@ func (s userService) UpdateUser(user *User) (*User, error) {
 	return updated, nil
 }
 
-func (s userService) DeleteUser(id string) error {
+func (s userService) DeleteUser(_ context.Context, id string) error {
 	err := s.repo.Delete(id)
 	if err != nil {
 		return errors.Wrap(err, "Service.DeleteUser")
@@ -54,7 +57,7 @@ func (s userService) DeleteUser(id string) error {
 	return nil
 }
 
-func (s userService) ListUsers() ([]User, error) {
+func (s userService) ListUsers(_ context.Context) ([]User, error) {
 	users, err := s.repo.GetAll()
 	if err != nil {
 		return nil, errors.Wrap(err, "Serive.ListUsers")

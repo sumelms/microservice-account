@@ -6,6 +6,7 @@ require (
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible // indirect
 	github.com/go-kit/kit v0.8.0
 	github.com/go-playground/validator/v10 v10.3.0
+	github.com/golang/protobuf v1.4.1
 	github.com/google/uuid v1.1.1
 	github.com/gorilla/mux v1.8.0
 	github.com/jinzhu/gorm v1.9.16
@@ -15,4 +16,5 @@ require (
 	github.com/sherifabdlnaby/configuro v0.0.2
 	github.com/vmihailenco/msgpack v3.3.3+incompatible
 	google.golang.org/appengine v1.6.6 // indirect
+	google.golang.org/protobuf v1.25.0
 )

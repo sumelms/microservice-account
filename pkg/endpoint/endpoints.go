@@ -39,7 +39,6 @@ func MakeEndpoints(s domain.Service) Endpoints {
 func makeCreateUserEndpoint(s domain.Service) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (interface{}, error) {
 		req := request.(CreateUserRequest)
-
 		ok, err := s.CreateUser(ctx, req.Email, req.Password)
 		return CreateUserResponse{Ok: ok}, err
 	}

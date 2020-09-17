@@ -1,12 +1,11 @@
 package domain
 
 import (
-	"github.com/google/uuid"
 	"time"
 )
 
 type User struct {
-	ID          uuid.UUID
+	ID          string
 	Username    string
 	Email       string
 	Password    string
