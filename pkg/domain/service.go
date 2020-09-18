@@ -21,7 +21,8 @@ type userService struct {
 
 func NewService(repository Repository, logger log.Logger) *userService {
 	return &userService{
-		repo: repository,
+		repo:   repository,
+		logger: logger,
 	}
 }
 
