@@ -31,7 +31,8 @@ message GetUserResponse {
 }
 
 message UpdateUserRequest {
-  UserModel user = 1;
+  string email = 1;
+  string password = 2;
 }
 message UpdateUserResponse {
   UserModel user = 1;

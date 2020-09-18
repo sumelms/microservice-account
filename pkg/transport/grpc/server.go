@@ -2,6 +2,7 @@ package grpc
 
 import (
 	"context"
+	"encoding/json"
 	"github.com/go-kit/kit/transport/grpc"
 	"github.com/sumelms/microservice-user/pkg/endpoint"
 	"github.com/sumelms/microservice-user/proto"
@@ -88,7 +89,12 @@ func decodeCreateUserRequest(_ context.Context, r interface{}) (interface{}, err
 }
 func encodeCreateUserResponse(_ context.Context, r interface{}) (interface{}, error) {
 	res := r.(endpoint.CreateUserResponse)
-	return &proto.CreateUserResponse{}, nil
+
+	var user proto.UserModel
+	data, _ := json.Marshal(res)
+	json.Unmarshal([]byte(data), &user)
+
+	return &proto.CreateUserResponse{User: &user}, nil
 }
 
 func decodeGetUserRequest(_ context.Context, r interface{}) (interface{}, error) {
@@ -97,32 +103,52 @@ func decodeGetUserRequest(_ context.Context, r interface{}) (interface{}, error)
 }
 func encodeGetUserResponse(_ context.Context, r interface{}) (interface{}, error) {
 	res := r.(endpoint.GetUserResponse)
-	return &proto.GetUserResponse{}, nil
+
+	var user proto.UserModel
+	data, _ := json.Marshal(res)
+	json.Unmarshal([]byte(data), &user)
+
+	return &proto.GetUserResponse{User: &user}, nil
 }
 
 func decodeUpdateUserRequest(_ context.Context, r interface{}) (interface{}, error) {
-	res := r.(*proto.UpdateUserRequest)
-	return endpoint.UpdateUserRequest{}, nil
+	req := r.(*proto.UpdateUserRequest)
+
+	return endpoint.UpdateUserRequest{
+		Email:    req.Email,
+		Password: req.Password,
+	}, nil
 }
 func encodeUpdateUserResponse(_ context.Context, r interface{}) (interface{}, error) {
 	res := r.(endpoint.UpdateUserResponse)
-	return &proto.UpdateUserResponse{}, nil
+
+	var user proto.UserModel
+	data, _ := json.Marshal(res)
+	json.Unmarshal([]byte(data), &user)
+
+	return &proto.UpdateUserResponse{User: &user}, nil
 }
 
 func decodeDeleteUserRequest(_ context.Context, r interface{}) (interface{}, error) {
-	res := r.(*proto.DeleteUserRequest)
-	return endpoint.DeleteUserRequest{}, nil
+	req := r.(*proto.DeleteUserRequest)
+	return endpoint.DeleteUserRequest{Id: req.Id}, nil
 }
 func encodeDeleteUserResponse(_ context.Context, r interface{}) (interface{}, error) {
 	res := r.(endpoint.DeleteUserResponse)
-	return &proto.DeleteUserResponse{}, nil
+	return &proto.DeleteUserResponse{Id: res.Id}, nil
 }
 
 func decodeListUsersRequest(_ context.Context, r interface{}) (interface{}, error) {
-	res := r.(*proto.ListUsersRequest)
+	// @TODO Pagination and Filter
+	//req := r.(*proto.ListUsersRequest)
 	return endpoint.ListUsersRequest{}, nil
 }
 func encodeListUsersResponse(c context.Context, r interface{}) (interface{}, error) {
 	res := r.(endpoint.ListUsersResponse)
-	return &proto.ListUsersResponse{}, nil
+
+	var users []*proto.UserModel
+	data, _ := json.Marshal(res)
+	json.Unmarshal([]byte(data), &users)
+
+	return &proto.ListUsersResponse{Users: users}, nil
 }

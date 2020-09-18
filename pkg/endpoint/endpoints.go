@@ -58,7 +58,7 @@ func MakeEndpoints(s domain.Service) Endpoints {
 		GetUser:    makeGetUserEndpoint(s),
 		UpdateUser: makeUpdateUserEndpoint(s),
 		DeleteUser: makeDeleteUserEndpoint(s),
-		ListUsers:  makeDeleteUserEndpoint(s),
+		ListUsers:  makeListUsersEndpoint(s),
 	}
 }
 
@@ -110,7 +110,7 @@ func makeDeleteUserEndpoint(s domain.Service) endpoint.Endpoint {
 	}
 }
 
-func makeListUsers(s domain.Service) endpoint.Endpoint {
+func makeListUsersEndpoint(s domain.Service) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (interface{}, error) {
 		// @TODO Pagination and filters
 		// req := request.(ListUsersRequest)
