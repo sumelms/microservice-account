@@ -16,7 +16,7 @@ import (
 	grpctransport "github.com/sumelms/microservice-user/pkg/transport/grpc"
 	httptransport "github.com/sumelms/microservice-user/pkg/transport/http"
 
-	database "github.com/sumelms/microservice-user/pkg/adapter/database/sql"
+	database "github.com/sumelms/microservice-user/pkg/adapter/database/gorm"
 	"github.com/sumelms/microservice-user/pkg/adapter/logger"
 	"github.com/sumelms/microservice-user/pkg/domain"
 

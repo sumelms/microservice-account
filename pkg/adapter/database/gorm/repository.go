@@ -1,20 +1,23 @@
 package gorm
 
 import (
+	"github.com/go-kit/kit/log"
 	"github.com/jinzhu/gorm"
 	"github.com/pkg/errors"
 	domain "github.com/sumelms/microservice-user/pkg/domain"
 )
 
 type Repository struct {
-	db *gorm.DB
+	db     *gorm.DB
+	logger log.Logger
 }
 
-func NewRepository(db *gorm.DB) *Repository {
+func NewRepository(db *gorm.DB, logger log.Logger) *Repository {
 	db.AutoMigrate(&User{})
 
 	return &Repository{
-		db: db,
+		db:     db,
+		logger: logger,
 	}
 }
 

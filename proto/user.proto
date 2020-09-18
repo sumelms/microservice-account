@@ -10,17 +10,41 @@ service User {
   rpc ListUsers(ListUsersRequest) returns (ListUsersResponse) {}
 }
 
-message CreateUserRequest {}
-message CreateUserResponse {}
+message UserModel {
+  string id = 1;
+  string email = 2;
+}
 
-message GetUserRequest {}
-message GetUserResponse {}
+message CreateUserRequest {
+  string email = 1;
+  string password = 2;
+}
+message CreateUserResponse {
+  UserModel user = 1;
+}
 
-message UpdateUserRequest {}
-message UpdateUserResponse {}
+message GetUserRequest {
+  string id = 1;
+}
+message GetUserResponse {
+  UserModel user = 1;
+}
 
-message DeleteUserRequest {}
-message DeleteUserResponse {}
+message UpdateUserRequest {
+  UserModel user = 1;
+}
+message UpdateUserResponse {
+  UserModel user = 1;
+}
+
+message DeleteUserRequest {
+  string id = 1;
+}
+message DeleteUserResponse {
+  string id = 1;
+}
 
 message ListUsersRequest {}
-message ListUsersResponse {}
+message ListUsersResponse {
+  repeated UserModel users = 1;
+}
