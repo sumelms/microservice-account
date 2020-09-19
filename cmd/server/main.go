@@ -27,7 +27,12 @@ import (
 
 func main() {
 	// Configuration
-	cfg, err := config.NewConfig()
+	configPath := os.Getenv("SUMELMS_CONFIG_PATH")
+	if configPath == "" {
+		configPath = "./config.yml"
+	}
+
+	cfg, err := config.NewConfig(configPath)
 	if err != nil {
 		panic(err)
 	}

@@ -10,7 +10,7 @@ build: build-proto
 	go build -o bin/sumelms-user cmd/server/main.go
 
 test:
-	go test
+	go test ./...
 
 build-proto:
 	protoc proto/*.proto --go_out=plugins=grpc:.

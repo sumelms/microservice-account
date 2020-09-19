@@ -35,12 +35,7 @@ type Logger struct {
 	Debug bool
 }
 
-func NewConfig() (*Config, error) {
-	configPath := os.Getenv("SUMELMS_CONFIG_PATH")
-	if configPath == "" {
-		configPath = "./config.yml"
-	}
-
+func NewConfig(configPath string) (*Config, error) {
 	if _, err := os.Stat(configPath); os.IsNotExist(err) {
 		return nil, errors.Wrapf(err, "Config file does not exists in %s", configPath)
 	}
