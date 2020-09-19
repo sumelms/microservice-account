@@ -9,7 +9,6 @@ import (
 
 type User struct {
 	ID          string `gorm:"type:uuid;primary_key;"`
-	Username    string
 	Email       string `gorm:"unique;index;"`
 	Password    string
 	CreatedAt   time.Time

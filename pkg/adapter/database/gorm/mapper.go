@@ -7,7 +7,6 @@ import (
 func toDBModel(entity *domain.User) *User {
 	user := &User{
 		ID:        entity.ID,
-		Username:  entity.Username,
 		Email:     entity.Email,
 		Password:  entity.Password,
 		CreatedAt: entity.CreatedAt,
@@ -27,7 +26,6 @@ func toDBModel(entity *domain.User) *User {
 func toDomainModel(entity *User) *domain.User {
 	return &domain.User{
 		ID:          entity.ID,
-		Username:    entity.Username,
 		Email:       entity.Email,
 		Password:    entity.Password,
 		CreatedAt:   entity.CreatedAt,
