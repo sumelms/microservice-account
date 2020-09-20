@@ -8,8 +8,8 @@ import (
 )
 
 type User struct {
-	ID          string `gorm:"type:uuid;primary_key;"`
-	Email       string `gorm:"unique;index;"`
+	ID          uuid.UUID `gorm:"type:uuid;primary_key;"`
+	Email       string    `gorm:"unique;index;"`
 	Password    string
 	CreatedAt   time.Time
 	UpdatedAt   time.Time
@@ -18,7 +18,7 @@ type User struct {
 }
 
 func (user User) BeforeCreate(scope *gorm.Scope) error {
-	id := uuid.New().String()
+	id := uuid.New()
 	err := scope.SetColumn("ID", id)
 	if err != nil {
 		return err

@@ -51,7 +51,7 @@ func (r Repository) Update(entity *domain.User) (*domain.User, error) {
 	// FIXME Can we improve the update process?
 	var user User
 
-	id := entity.ID
+	id := entity.ID.String()
 	query := r.db.Where("id = ?", id).First(&user)
 
 	if query.RecordNotFound() {

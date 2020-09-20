@@ -3,14 +3,17 @@ package endpoint
 import (
 	"context"
 	"encoding/json"
+	"errors"
 	"github.com/go-kit/kit/endpoint"
+	"github.com/sumelms/microservice-user/pkg/adapter/validator"
 	"github.com/sumelms/microservice-user/pkg/domain"
 )
 
 type (
 	CreateUserRequest struct {
-		Email    string `json:"email"`
-		Password string `json:"password"`
+		Email           string `json:"email" validate:"required,email"`
+		Password        string `json:"password" validate:"required,alphanum,min=6"`
+		ConfirmPassword string `json:"confirm_password" validate:"required,eqfield=Password"`
 	}
 	CreateUserResponse struct {
 		User *domain.User `json:"user"`
@@ -24,8 +27,10 @@ type (
 	}
 
 	UpdateUserRequest struct {
-		Email    string `json:"email"`
-		Password string `json:"password"`
+		Id              string `json:"id"`
+		Email           string `json:"email" validate:"email"`
+		Password        string `json:"password" validate:"alphanum,min=6"`
+		ConfirmPassword string `json:"confirm_password" validate:"required_with=Password,eqfield=Password"`
 	}
 	UpdateUserResponse struct {
 		User *domain.User `json:"user"`
@@ -66,6 +71,11 @@ func makeCreateUserEndpoint(s domain.Service) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (interface{}, error) {
 		req := request.(CreateUserRequest)
 
+		validator := validator.NewValidator()
+		if err := validator.Validate(req); err != nil {
+			return nil, err
+		}
+
 		data, _ := json.Marshal(req)
 		user := domain.User{}
 		json.Unmarshal([]byte(data), &user)
@@ -80,6 +90,10 @@ func makeGetUserEndpoint(s domain.Service) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (interface{}, error) {
 		req := request.(GetUserRequest)
 
+		if req.Id == "" {
+			return nil, errors.New("bad request, missing param id")
+		}
+
 		user, err := s.GetUser(ctx, req.Id)
 
 		return GetUserResponse{User: user}, err
@@ -89,6 +103,11 @@ func makeGetUserEndpoint(s domain.Service) endpoint.Endpoint {
 func makeUpdateUserEndpoint(s domain.Service) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (interface{}, error) {
 		req := request.(UpdateUserRequest)
+
+		validator := validator.NewValidator()
+		if err := validator.Validate(req); err != nil {
+			return nil, err
+		}
 
 		data, _ := json.Marshal(req)
 		user := domain.User{}
@@ -103,6 +122,10 @@ func makeUpdateUserEndpoint(s domain.Service) endpoint.Endpoint {
 func makeDeleteUserEndpoint(s domain.Service) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (interface{}, error) {
 		req := request.(DeleteUserRequest)
+
+		if req.Id == "" {
+			return nil, errors.New("bad request, missing id param")
+		}
 
 		err := s.DeleteUser(ctx, req.Id)
 
