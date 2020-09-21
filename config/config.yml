@@ -1,4 +1,3 @@
-service: "sumelms-user"
 server:
   http:
     host: ":8080"
@@ -6,7 +5,7 @@ server:
     host: ":8081"
 database:
   driver: postgres
-  host: postgres
+  host: localhost
   port: 5432
   username: postgres
   password: password

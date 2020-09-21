@@ -26,6 +26,9 @@ import (
 )
 
 func main() {
+	// Logger
+	logger := logger.NewLogger()
+
 	// Configuration
 	configPath := os.Getenv("SUMELMS_CONFIG_PATH")
 	if configPath == "" {
@@ -34,11 +37,9 @@ func main() {
 
 	cfg, err := config.NewConfig(configPath)
 	if err != nil {
-		panic(err)
+		level.Error(logger).Log("exit", err)
+		os.Exit(-1)
 	}
-
-	// Logger
-	logger := logger.NewLogger(cfg)
 
 	level.Info(logger).Log("msg", "service started")
 	defer level.Info(logger).Log("msg", "service ended")
@@ -51,11 +52,8 @@ func main() {
 	}
 
 	ctx := context.Background()
-	var srv domain.Service
-	{
-		repository := database.NewRepository(db, logger)
-		srv = domain.NewService(repository, logger)
-	}
+	repository := database.NewRepository(db, logger)
+	srv := domain.NewService(repository, logger)
 
 	errs := make(chan error)
 

@@ -2,6 +2,7 @@ package gorm
 
 import (
 	"fmt"
+	"github.com/pkg/errors"
 
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres" // database driver
@@ -15,7 +16,7 @@ func Connect(cfg *config.Database) (*gorm.DB, error) {
 
 	db, err := gorm.Open(cfg.Driver, connString)
 	if err != nil {
-		return nil, err
+		return nil, errors.Wrap(err, "failed to connect to the database")
 	}
 
 	return db, nil

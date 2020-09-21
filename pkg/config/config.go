@@ -8,8 +8,7 @@ import (
 )
 
 type Config struct {
-	Service string // Service name
-	Server  struct {
+	Server struct {
 		Http *Server
 		Grpc *Server
 	}
@@ -48,7 +47,6 @@ func NewConfig(configPath string) (*Config, error) {
 	}
 
 	config := &Config{}
-
 	if err := loader.Load(config); err != nil {
 		return nil, err
 	}
