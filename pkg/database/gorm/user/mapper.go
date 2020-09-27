@@ -1,7 +1,7 @@
 package user
 
 import (
-	domain "github.com/sumelms/microservice-account/pkg/user"
+	domain "github.com/sumelms/microservice-account/pkg/domain/user"
 )
 
 func toDBModel(entity *domain.User) *User {

@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"errors"
 	"github.com/go-kit/kit/endpoint"
-	"github.com/sumelms/microservice-account/pkg/user"
+	"github.com/sumelms/microservice-account/pkg/domain/user"
 	"github.com/sumelms/microservice-account/pkg/validator"
 )
 

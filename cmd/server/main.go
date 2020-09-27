@@ -18,8 +18,8 @@ import (
 	httptransport "github.com/sumelms/microservice-account/pkg/transport/http"
 
 	database "github.com/sumelms/microservice-account/pkg/database/gorm"
+	userdomain "github.com/sumelms/microservice-account/pkg/domain/user"
 	"github.com/sumelms/microservice-account/pkg/logger"
-	userdomain "github.com/sumelms/microservice-account/pkg/user"
 
 	"github.com/go-kit/kit/log/level"
 	_ "github.com/lib/pq"
