@@ -9,29 +9,23 @@ import (
 
 type Config struct {
 	Server struct {
-		Http *Server
-		Grpc *Server
-	}
-	Database *Database
-	Logger   Logger
+		Http *Server `validate:"required"`
+		Grpc *Server `validate:"required"`
+	} `validate:"required"`
+	Database *Database `validate:"required"`
 }
 
 type Database struct {
-	Driver   string
-	Host     string
-	Port     string
-	Username string
-	Password string
-	Database string
+	Driver   string `validate:"required"`
+	Host     string `validate:"required"`
+	Port     string `validate:"required"`
+	Username string `validate:"required"`
+	Password string `validate:"required`
+	Database string `validate:"required"`
 }
 
 type Server struct {
-	Host string
-}
-
-type Logger struct {
-	Level string
-	Debug bool
+	Host string `validate:"required"`
 }
 
 func NewConfig(configPath string) (*Config, error) {
@@ -48,6 +42,10 @@ func NewConfig(configPath string) (*Config, error) {
 
 	config := &Config{}
 	if err := loader.Load(config); err != nil {
+		return nil, err
+	}
+
+	if err := loader.Validate(config); err != nil {
 		return nil, err
 	}
 
