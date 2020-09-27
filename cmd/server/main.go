@@ -3,8 +3,8 @@ package main
 import (
 	"context"
 	"fmt"
-	endpoints "github.com/sumelms/microservice-user/pkg/endpoint"
-	"github.com/sumelms/microservice-user/proto"
+	endpoints "github.com/sumelms/microservice-account/pkg/endpoint"
+	"github.com/sumelms/microservice-account/proto"
 	"google.golang.org/grpc/reflection"
 	"net"
 	"net/http"
@@ -12,13 +12,13 @@ import (
 	"os/signal"
 	"syscall"
 
-	"github.com/sumelms/microservice-user/pkg/config"
-	grpctransport "github.com/sumelms/microservice-user/pkg/transport/grpc"
-	httptransport "github.com/sumelms/microservice-user/pkg/transport/http"
+	"github.com/sumelms/microservice-account/pkg/config"
+	grpctransport "github.com/sumelms/microservice-account/pkg/transport/grpc"
+	httptransport "github.com/sumelms/microservice-account/pkg/transport/http"
 
-	database "github.com/sumelms/microservice-user/pkg/adapter/database/gorm"
-	"github.com/sumelms/microservice-user/pkg/adapter/logger"
-	"github.com/sumelms/microservice-user/pkg/domain"
+	database "github.com/sumelms/microservice-account/pkg/adapter/database/gorm"
+	"github.com/sumelms/microservice-account/pkg/adapter/logger"
+	"github.com/sumelms/microservice-account/pkg/domain"
 
 	"github.com/go-kit/kit/log/level"
 	_ "github.com/lib/pq"

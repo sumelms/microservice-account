@@ -17,7 +17,7 @@
 
 ## About Sumé LMS
 
-> Note: This repository contains the **user microservice** of the Sumé LMS. If you are looking for more information 
+> Note: This repository contains the **account microservice** of the Sumé LMS. If you are looking for more information 
 > about the application, we strongly recommend you to [check the documentation](https://www.sumelms.com/docs).
 
 Sumé LMS is a modern and open-source learning management system that uses modern technologies to deliver performance 
@@ -55,7 +55,7 @@ and scalability to your learning environment.
 Clone the repository
 
 ```bash
-$ git clone [git@github.com](mailto:git@github.com):sumelms/microservice-user.git
+$ git clone [git@github.com](mailto:git@github.com):sumelms/microservice-account.git
 ```
 
 Access the project folder, and download the Go dependencies
@@ -110,7 +110,7 @@ execute the following command:
 $ make run
 ```
 
-Once it is running you can test it: http://localhost:8080/users
+Once it is running you can test it: http://localhost:8080/health
 
 ### Docker run
 
@@ -144,7 +144,7 @@ the IP address to access the microservice. In order to do it, you can use the fo
 $ docker system info | grep "Node Address"
 ```
 
-Once you have the IP address you can now access the endpoint: http://<docker-ip>:8080/users
+Once you have the IP address you can now access the endpoint: http://<docker-ip>:8080/health
 
 > NOTE: You can remove/shutdown the deployment with: ```$ docker stack rm sumelms```
 
@@ -163,7 +163,7 @@ SUMELMS_DATABASE_HOST = "localhost"
 SUMELMS_DATABASE_PORT = 5432
 SUMELMS_DATABASE_USER = nil
 SUMELMS_DATABASE_PASSWORD = nil
-SUMELMS_DATABASE_DATABASE = "sumelms_user"
+SUMELMS_DATABASE_DATABASE = "sumelms_account"
 ```
 
 > We are using [configuro](https://github.com/sherifabdlnaby/configuro) to manage the configuration, so the precedence 

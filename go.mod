@@ -1,4 +1,4 @@
-module github.com/sumelms/microservice-user
+module github.com/sumelms/microservice-account
 
 go 1.14
 

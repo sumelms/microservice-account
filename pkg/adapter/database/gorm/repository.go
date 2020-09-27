@@ -4,7 +4,7 @@ import (
 	"github.com/go-kit/kit/log"
 	"github.com/jinzhu/gorm"
 	"github.com/pkg/errors"
-	domain "github.com/sumelms/microservice-user/pkg/domain"
+	domain "github.com/sumelms/microservice-account/pkg/domain"
 )
 
 type Repository struct {

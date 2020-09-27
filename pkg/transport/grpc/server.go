@@ -4,8 +4,8 @@ import (
 	"context"
 	"encoding/json"
 	"github.com/go-kit/kit/transport/grpc"
-	"github.com/sumelms/microservice-user/pkg/endpoint"
-	"github.com/sumelms/microservice-user/proto"
+	"github.com/sumelms/microservice-account/pkg/endpoint"
+	"github.com/sumelms/microservice-account/proto"
 )
 
 type server struct {
