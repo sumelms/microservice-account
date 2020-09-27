@@ -3,18 +3,19 @@ package http
 import (
 	"context"
 	"encoding/json"
-	"github.com/sumelms/microservice-account/pkg/adapter/middleware"
-	"github.com/sumelms/microservice-account/pkg/endpoint"
+	"github.com/sumelms/microservice-account/pkg/endpoint/user"
+	"github.com/sumelms/microservice-account/pkg/middleware"
 	"net/http"
 
 	httptransport "github.com/go-kit/kit/transport/http"
 	"github.com/gorilla/mux"
 )
 
-func NewHttpServer(ctx context.Context, endpoints endpoint.Endpoints) http.Handler {
+func NewHttpServer(ctx context.Context, endpoints user.Endpoints) http.Handler {
 	r := mux.NewRouter()
 	r.Use(middleware.JsonEncodeMiddleware)
 
+	// @TODO Move domain specific routes to a separated file
 	r.Methods("POST").Path("/user").Handler(httptransport.NewServer(
 		endpoints.CreateUser,
 		decodeCreateUserRequest,
@@ -53,7 +54,7 @@ func encodeResponse(_ context.Context, w http.ResponseWriter, response interface
 }
 
 func decodeCreateUserRequest(_ context.Context, r *http.Request) (interface{}, error) {
-	var req endpoint.CreateUserRequest
+	var req user.CreateUserRequest
 	err := json.NewDecoder(r.Body).Decode(&req)
 	if err != nil {
 		return nil, err
@@ -62,23 +63,23 @@ func decodeCreateUserRequest(_ context.Context, r *http.Request) (interface{}, e
 }
 
 func decodeGetUserRequest(_ context.Context, r *http.Request) (interface{}, error) {
-	var req endpoint.GetUserRequest
+	var req user.GetUserRequest
 	vars := mux.Vars(r)
 
-	req = endpoint.GetUserRequest{Id: vars["id"]}
+	req = user.GetUserRequest{Id: vars["id"]}
 
 	return req, nil
 }
 
 func decodeUpdateUserRequest(_ context.Context, r *http.Request) (interface{}, error) {
-	var req endpoint.UpdateUserRequest
+	var req user.UpdateUserRequest
 	err := json.NewDecoder(r.Body).Decode(&req)
 	if err != nil {
 		return nil, err
 	}
 
 	vars := mux.Vars(r)
-	req = endpoint.UpdateUserRequest{
+	req = user.UpdateUserRequest{
 		Id:              vars["id"],
 		Email:           req.Email,
 		Password:        req.Password,
@@ -89,15 +90,15 @@ func decodeUpdateUserRequest(_ context.Context, r *http.Request) (interface{}, e
 }
 
 func decodeDeleteUserRequest(_ context.Context, r *http.Request) (interface{}, error) {
-	var req endpoint.DeleteUserRequest
+	var req user.DeleteUserRequest
 	vars := mux.Vars(r)
 
-	req = endpoint.DeleteUserRequest{Id: vars["id"]}
+	req = user.DeleteUserRequest{Id: vars["id"]}
 
 	return req, nil
 }
 
 func decodeListUsersRequest(_ context.Context, r *http.Request) (interface{}, error) {
-	req := endpoint.ListUsersRequest{}
+	req := user.ListUsersRequest{}
 	return req, nil
 }

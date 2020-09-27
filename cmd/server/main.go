@@ -3,8 +3,9 @@ package main
 import (
 	"context"
 	"fmt"
-	endpoints "github.com/sumelms/microservice-account/pkg/endpoint"
-	"github.com/sumelms/microservice-account/proto"
+	user "github.com/sumelms/microservice-account/pkg/database/gorm/user"
+	userendpoint "github.com/sumelms/microservice-account/pkg/endpoint/user"
+	protouser "github.com/sumelms/microservice-account/proto/user"
 	"google.golang.org/grpc/reflection"
 	"net"
 	"net/http"
@@ -16,15 +17,16 @@ import (
 	grpctransport "github.com/sumelms/microservice-account/pkg/transport/grpc"
 	httptransport "github.com/sumelms/microservice-account/pkg/transport/http"
 
-	database "github.com/sumelms/microservice-account/pkg/adapter/database/gorm"
-	"github.com/sumelms/microservice-account/pkg/adapter/logger"
-	"github.com/sumelms/microservice-account/pkg/domain"
+	database "github.com/sumelms/microservice-account/pkg/database/gorm"
+	"github.com/sumelms/microservice-account/pkg/logger"
+	userdomain "github.com/sumelms/microservice-account/pkg/user"
 
 	"github.com/go-kit/kit/log/level"
 	_ "github.com/lib/pq"
 	"google.golang.org/grpc"
 )
 
+// @TODO Split this file into http and grpc files
 func main() {
 	// Logger
 	logger := logger.NewLogger()
@@ -52,8 +54,8 @@ func main() {
 	}
 
 	ctx := context.Background()
-	repository := database.NewRepository(db, logger)
-	srv := domain.NewService(repository, logger)
+	repository := user.NewRepository(db, logger)
+	srv := userdomain.NewService(repository, logger)
 
 	errs := make(chan error)
 
@@ -63,7 +65,7 @@ func main() {
 		errs <- fmt.Errorf("%s", <-c)
 	}()
 
-	endpoints := endpoints.MakeEndpoints(srv)
+	endpoints := userendpoint.MakeEndpoints(srv)
 
 	// HTTP Server
 	go func() {
@@ -87,7 +89,7 @@ func main() {
 		handler := grpctransport.NewGrpcServer(ctx, endpoints)
 		grpcServer := grpc.NewServer()
 
-		proto.RegisterUserServer(grpcServer, handler)
+		protouser.RegisterUserServer(grpcServer, handler)
 		reflection.Register(grpcServer)
 
 		errs <- grpcServer.Serve(listener)

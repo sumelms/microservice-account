@@ -1,10 +1,10 @@
-package gorm
+package user
 
 import (
 	"github.com/go-kit/kit/log"
 	"github.com/jinzhu/gorm"
 	"github.com/pkg/errors"
-	domain "github.com/sumelms/microservice-account/pkg/domain"
+	domain "github.com/sumelms/microservice-account/pkg/user"
 )
 
 type Repository struct {

@@ -13,7 +13,7 @@ test:
 	go test ./...
 
 build-proto:
-	protoc proto/*.proto --go_out=plugins=grpc:.
+	protoc proto/**/*.proto --go_out=plugins=grpc:.
 
 docker-build:
 	docker build -t ${IMAGE} .

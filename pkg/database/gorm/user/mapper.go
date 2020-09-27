@@ -1,7 +1,7 @@
-package gorm
+package user
 
 import (
-	domain "github.com/sumelms/microservice-account/pkg/domain"
+	domain "github.com/sumelms/microservice-account/pkg/user"
 )
 
 func toDBModel(entity *domain.User) *User {

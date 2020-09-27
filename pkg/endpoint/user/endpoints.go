@@ -1,12 +1,12 @@
-package endpoint
+package user
 
 import (
 	"context"
 	"encoding/json"
 	"errors"
 	"github.com/go-kit/kit/endpoint"
-	"github.com/sumelms/microservice-account/pkg/adapter/validator"
-	"github.com/sumelms/microservice-account/pkg/domain"
+	"github.com/sumelms/microservice-account/pkg/user"
+	"github.com/sumelms/microservice-account/pkg/validator"
 )
 
 type (
@@ -16,14 +16,14 @@ type (
 		ConfirmPassword string `json:"confirm_password" validate:"required,eqfield=Password"`
 	}
 	CreateUserResponse struct {
-		User *domain.User `json:"user"`
+		User *user.User `json:"user"`
 	}
 
 	GetUserRequest struct {
 		Id string `json:"id"`
 	}
 	GetUserResponse struct {
-		User *domain.User `json:"user"`
+		User *user.User `json:"user"`
 	}
 
 	UpdateUserRequest struct {
@@ -33,7 +33,7 @@ type (
 		ConfirmPassword string `json:"confirm_password" validate:"required_with=Password,eqfield=Password"`
 	}
 	UpdateUserResponse struct {
-		User *domain.User `json:"user"`
+		User *user.User `json:"user"`
 	}
 
 	DeleteUserRequest struct {
@@ -45,7 +45,7 @@ type (
 
 	ListUsersRequest  struct{}
 	ListUsersResponse struct {
-		Users *[]domain.User `json:"users"`
+		Users *[]user.User `json:"users"`
 	}
 )
 
@@ -57,7 +57,7 @@ type Endpoints struct {
 	ListUsers  endpoint.Endpoint
 }
 
-func MakeEndpoints(s domain.Service) Endpoints {
+func MakeEndpoints(s user.Service) Endpoints {
 	return Endpoints{
 		CreateUser: makeCreateUserEndpoint(s),
 		GetUser:    makeGetUserEndpoint(s),
@@ -67,7 +67,7 @@ func MakeEndpoints(s domain.Service) Endpoints {
 	}
 }
 
-func makeCreateUserEndpoint(s domain.Service) endpoint.Endpoint {
+func makeCreateUserEndpoint(s user.Service) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (interface{}, error) {
 		req := request.(CreateUserRequest)
 
@@ -77,7 +77,7 @@ func makeCreateUserEndpoint(s domain.Service) endpoint.Endpoint {
 		}
 
 		data, _ := json.Marshal(req)
-		user := domain.User{}
+		user := user.User{}
 		json.Unmarshal([]byte(data), &user)
 
 		ok, err := s.CreateUser(ctx, &user)
@@ -86,7 +86,7 @@ func makeCreateUserEndpoint(s domain.Service) endpoint.Endpoint {
 	}
 }
 
-func makeGetUserEndpoint(s domain.Service) endpoint.Endpoint {
+func makeGetUserEndpoint(s user.Service) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (interface{}, error) {
 		req := request.(GetUserRequest)
 
@@ -100,7 +100,7 @@ func makeGetUserEndpoint(s domain.Service) endpoint.Endpoint {
 	}
 }
 
-func makeUpdateUserEndpoint(s domain.Service) endpoint.Endpoint {
+func makeUpdateUserEndpoint(s user.Service) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (interface{}, error) {
 		req := request.(UpdateUserRequest)
 
@@ -110,7 +110,7 @@ func makeUpdateUserEndpoint(s domain.Service) endpoint.Endpoint {
 		}
 
 		data, _ := json.Marshal(req)
-		user := domain.User{}
+		user := user.User{}
 		json.Unmarshal([]byte(data), &user)
 
 		updated, err := s.UpdateUser(ctx, &user)
@@ -119,7 +119,7 @@ func makeUpdateUserEndpoint(s domain.Service) endpoint.Endpoint {
 	}
 }
 
-func makeDeleteUserEndpoint(s domain.Service) endpoint.Endpoint {
+func makeDeleteUserEndpoint(s user.Service) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (interface{}, error) {
 		req := request.(DeleteUserRequest)
 
@@ -133,7 +133,7 @@ func makeDeleteUserEndpoint(s domain.Service) endpoint.Endpoint {
 	}
 }
 
-func makeListUsersEndpoint(s domain.Service) endpoint.Endpoint {
+func makeListUsersEndpoint(s user.Service) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (interface{}, error) {
 		// @TODO Pagination and filters
 		// req := request.(ListUsersRequest)
