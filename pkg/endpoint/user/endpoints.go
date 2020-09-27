@@ -16,14 +16,15 @@ type (
 		ConfirmPassword string `json:"confirm_password" validate:"required,eqfield=Password"`
 	}
 	CreateUserResponse struct {
-		User *user.User `json:"user"`
+		Id string `json:"id"`
 	}
 
 	GetUserRequest struct {
 		Id string `json:"id"`
 	}
 	GetUserResponse struct {
-		User *user.User `json:"user"`
+		Id    string `json:"id"`
+		Email string `json:"email"`
 	}
 
 	UpdateUserRequest struct {
@@ -33,7 +34,8 @@ type (
 		ConfirmPassword string `json:"confirm_password" validate:"required_with=Password,eqfield=Password"`
 	}
 	UpdateUserResponse struct {
-		User *user.User `json:"user"`
+		Id    string `json:"id"`
+		Email string `json:"email"`
 	}
 
 	DeleteUserRequest struct {
@@ -82,7 +84,7 @@ func makeCreateUserEndpoint(s user.Service) endpoint.Endpoint {
 
 		ok, err := s.CreateUser(ctx, &user)
 
-		return CreateUserResponse{User: ok}, err
+		return CreateUserResponse{Id: ok.ID.String()}, err
 	}
 }
 
@@ -96,7 +98,10 @@ func makeGetUserEndpoint(s user.Service) endpoint.Endpoint {
 
 		user, err := s.GetUser(ctx, req.Id)
 
-		return GetUserResponse{User: user}, err
+		return GetUserResponse{
+			Id:    user.ID.String(),
+			Email: user.Email,
+		}, err
 	}
 }
 
@@ -115,7 +120,10 @@ func makeUpdateUserEndpoint(s user.Service) endpoint.Endpoint {
 
 		updated, err := s.UpdateUser(ctx, &user)
 
-		return UpdateUserResponse{User: updated}, err
+		return UpdateUserResponse{
+			Id:    updated.ID.String(),
+			Email: updated.Email,
+		}, err
 	}
 }
 
