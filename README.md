@@ -3,13 +3,13 @@
 </p>
 
 <p align="center">
-  <a href="https://travis-ci.org/sumelms/microservice-user">
-    <img alt="Travis (.org)" src="https://travis-ci.org/sumelms/microservice-user.svg?branch=main">
+  <a href="https://travis-ci.org/sumelms/microservice-account">
+    <img alt="Travis (.org)" src="https://travis-ci.org/sumelms/microservice-account.svg?branch=main">
   </a>  
-  <a href="https://codecov.io/gh/sumelms/microservice-user">
-    <img src="https://codecov.io/gh/sumelms/backend/microservice-user/main/graph/badge.svg?token=8E92BS3SR9" />
+  <a href="https://codecov.io/gh/sumelms/microservice-account">
+    <img src="https://codecov.io/gh/sumelms/backend/microservice-account/main/graph/badge.svg?token=8E92BS3SR9" />
   </a>
-  <img alt="GitHub" src="https://img.shields.io/github/license/sumelms/microservice-user">
+  <img alt="GitHub" src="https://img.shields.io/github/license/sumelms/microservice-account">
   <a href="https://discord.gg/Yh9q9cd">
     <img alt="Discord" src="https://img.shields.io/discord/726500188021063682">
   </a>

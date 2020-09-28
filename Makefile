@@ -5,15 +5,22 @@ IMAGE := ${DOCKERHUB_NAMESPACE}/microservice-account:${VERSION}
 run: build-proto
 	export SUMELMS_CONFIG_PATH="./config/config.yml" && \
 	go run cmd/server/main.go
+.PHONY: run
 
 build: build-proto
 	go build -o bin/sumelms-account cmd/server/main.go
+.PHONY: build
 
-test:
-	go test ./...
+test-unit:
+	go test $$(go list ./... | grep -v /test/) $(TEST_OPTIONS)
+.PHONY: test-unit
 
 build-proto:
 	protoc proto/**/*.proto --go_out=plugins=grpc:.
+.PHONY: build-proto
+
+lint:
+	golint $$(go list ./... | grep -v /vendor/)
 
 docker-build:
 	docker build -t ${IMAGE} .
