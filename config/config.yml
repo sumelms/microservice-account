@@ -1,0 +1,12 @@
+server:
+  http:
+    host: ":8080"
+  grpc:
+    host: ":8081"
+database:
+  driver: postgres
+  host: postgres
+  port: 5432
+  username: postgres
+  password: password
+  database: postgres
