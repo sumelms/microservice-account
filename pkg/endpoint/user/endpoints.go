@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
+
 	"github.com/go-kit/kit/endpoint"
 	"github.com/sumelms/microservice-account/pkg/domain/user"
 	"github.com/sumelms/microservice-account/pkg/validator"
@@ -143,9 +144,6 @@ func makeDeleteUserEndpoint(s user.Service) endpoint.Endpoint {
 
 func makeListUsersEndpoint(s user.Service) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (interface{}, error) {
-		// @TODO Pagination and filters
-		// req := request.(ListUsersRequest)
-
 		users, err := s.ListUsers(ctx)
 
 		return ListUsersResponse{Users: &users}, err

@@ -19,7 +19,6 @@ func TestNewConfig(t *testing.T) {
 	}{
 		{name: "Invalid path", args: args{configPath: "config.yml"}, wantErr: true},
 		{name: "Correct path", args: args{configPath: "config/config.yml"}, wantErr: false},
-		// @TODO Check with sampleConfig
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

@@ -7,11 +7,15 @@ import (
 	domain "github.com/sumelms/microservice-account/pkg/domain/user"
 )
 
+const whereQuery = "id = ?"
+
+// Repository struct
 type Repository struct {
 	db     *gorm.DB
 	logger log.Logger
 }
 
+// NewRepository creates a new user repository
 func NewRepository(db *gorm.DB, logger log.Logger) *Repository {
 	db.AutoMigrate(&User{})
 
@@ -21,6 +25,7 @@ func NewRepository(db *gorm.DB, logger log.Logger) *Repository {
 	}
 }
 
+// Store creates an user
 func (r Repository) Store(user *domain.User) (*domain.User, error) {
 	entity := toDBModel(user)
 
@@ -31,10 +36,11 @@ func (r Repository) Store(user *domain.User) (*domain.User, error) {
 	return toDomainModel(entity), nil
 }
 
+// GetByID get a user by its ID
 func (r Repository) GetByID(id string) (*domain.User, error) {
 	var result User
 
-	query := r.db.Where("id = ?", id).First(&result)
+	query := r.db.Where(whereQuery, id).First(&result)
 
 	if query.RecordNotFound() {
 		return nil, errors.New("User not found")
@@ -47,12 +53,12 @@ func (r Repository) GetByID(id string) (*domain.User, error) {
 	return toDomainModel(&result), nil
 }
 
+// Update the given user
 func (r Repository) Update(entity *domain.User) (*domain.User, error) {
-	// FIXME Can we improve the update process?
 	var user User
 
 	id := entity.ID.String()
-	query := r.db.Where("id = ?", id).First(&user)
+	query := r.db.Where(whereQuery, id).First(&user)
 
 	if query.RecordNotFound() {
 		return nil, errors.New("User not found")
@@ -75,8 +81,9 @@ func (r Repository) Update(entity *domain.User) (*domain.User, error) {
 	return toDomainModel(&user), nil
 }
 
+// Delete a user by ID
 func (r Repository) Delete(id string) error {
-	query := r.db.Model(User{}).Where("id = ?", id).Update("deleted_at", "NOW()")
+	query := r.db.Model(User{}).Where(whereQuery, id).Update("deleted_at", "NOW()")
 
 	if err := query.Error; err != nil {
 		return err
@@ -85,6 +92,7 @@ func (r Repository) Delete(id string) error {
 	return nil
 }
 
+// GetAll returns a list of users
 func (r Repository) GetAll() ([]domain.User, error) {
 	var results []User
 

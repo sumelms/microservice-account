@@ -3,75 +3,10 @@ package grpc
 import (
 	"context"
 	"encoding/json"
-	"github.com/go-kit/kit/transport/grpc"
+
 	"github.com/sumelms/microservice-account/pkg/endpoint/user"
 	protouser "github.com/sumelms/microservice-account/proto/user"
 )
-
-func (s server) CreateUser(ctx context.Context, req *protouser.CreateUserRequest) (*protouser.CreateUserResponse, error) {
-	_, resp, err := s.createUser.ServeGRPC(ctx, req)
-	if err != nil {
-		return nil, err
-	}
-	return resp.(*protouser.CreateUserResponse), nil
-}
-
-func (s server) GetUser(ctx context.Context, req *protouser.GetUserRequest) (*protouser.GetUserResponse, error) {
-	_, resp, err := s.getUser.ServeGRPC(ctx, req)
-	if err != nil {
-		return nil, err
-	}
-	return resp.(*protouser.GetUserResponse), nil
-}
-
-func (s server) UpdateUser(ctx context.Context, req *protouser.UpdateUserRequest) (*protouser.UpdateUserResponse, error) {
-	_, resp, err := s.updateUser.ServeGRPC(ctx, req)
-	if err != nil {
-		return nil, err
-	}
-	return resp.(*protouser.UpdateUserResponse), nil
-}
-
-func (s server) DeleteUser(ctx context.Context, req *protouser.DeleteUserRequest) (*protouser.DeleteUserResponse, error) {
-	_, resp, err := s.deleteUser.ServeGRPC(ctx, req)
-	if err != nil {
-		return nil, err
-	}
-	return resp.(*protouser.DeleteUserResponse), nil
-}
-
-func (s server) ListUsers(ctx context.Context, req *protouser.ListUsersRequest) (*protouser.ListUsersResponse, error) {
-	_, resp, err := s.listUsers.ServeGRPC(ctx, req)
-	if err != nil {
-		return nil, err
-	}
-	return resp.(*protouser.ListUsersResponse), nil
-}
-
-func NewGrpcServer(_ context.Context, endpoints user.Endpoints) protouser.UserServer {
-	return &server{
-		createUser: grpc.NewServer(
-			endpoints.CreateUser,
-			decodeCreateUserRequest,
-			encodeCreateUserResponse),
-		getUser: grpc.NewServer(
-			endpoints.GetUser,
-			decodeGetUserRequest,
-			encodeGetUserResponse),
-		updateUser: grpc.NewServer(
-			endpoints.UpdateUser,
-			decodeUpdateUserRequest,
-			encodeUpdateUserResponse),
-		deleteUser: grpc.NewServer(
-			endpoints.DeleteUser,
-			decodeDeleteUserRequest,
-			encodeDeleteUserResponse),
-		listUsers: grpc.NewServer(
-			endpoints.ListUsers,
-			decodeListUsersRequest,
-			encodeListUsersResponse),
-	}
-}
 
 func decodeCreateUserRequest(_ context.Context, r interface{}) (interface{}, error) {
 	req := r.(*protouser.CreateUserRequest)
@@ -131,8 +66,6 @@ func encodeDeleteUserResponse(_ context.Context, r interface{}) (interface{}, er
 }
 
 func decodeListUsersRequest(_ context.Context, r interface{}) (interface{}, error) {
-	// @TODO Pagination and Filter
-	//req := r.(*proto.ListUsersRequest)
 	return user.ListUsersRequest{}, nil
 }
 func encodeListUsersResponse(c context.Context, r interface{}) (interface{}, error) {
@@ -144,4 +77,3 @@ func encodeListUsersResponse(c context.Context, r interface{}) (interface{}, err
 
 	return &protouser.ListUsersResponse{Users: users}, nil
 }
-
