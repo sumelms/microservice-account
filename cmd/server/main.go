@@ -3,15 +3,16 @@ package main
 import (
 	"context"
 	"fmt"
-	user "github.com/sumelms/microservice-account/pkg/database/gorm/user"
-	userendpoint "github.com/sumelms/microservice-account/pkg/endpoint/user"
-	protouser "github.com/sumelms/microservice-account/proto/user"
-	"google.golang.org/grpc/reflection"
 	"net"
 	"net/http"
 	"os"
 	"os/signal"
 	"syscall"
+
+	user "github.com/sumelms/microservice-account/pkg/database/gorm/user"
+	userendpoint "github.com/sumelms/microservice-account/pkg/endpoint/user"
+	protouser "github.com/sumelms/microservice-account/proto/user"
+	"google.golang.org/grpc/reflection"
 
 	"github.com/sumelms/microservice-account/pkg/config"
 	grpctransport "github.com/sumelms/microservice-account/pkg/transport/grpc"
@@ -26,7 +27,6 @@ import (
 	"google.golang.org/grpc"
 )
 
-// @TODO Split this file into http and grpc files
 func main() {
 	// Logger
 	logger := logger.NewLogger()
@@ -71,7 +71,7 @@ func main() {
 	go func() {
 		fmt.Println("HTTP Server Listening on", cfg.Server.Http.Host)
 
-		httpServer := httptransport.NewHttpServer(ctx, endpoints)
+		httpServer := httptransport.NewHTTPServer(ctx, endpoints)
 
 		errs <- http.ListenAndServe(cfg.Server.Http.Host, httpServer)
 	}()
@@ -86,7 +86,7 @@ func main() {
 
 		fmt.Println("gRPC Server Listening on", cfg.Server.Grpc.Host)
 
-		handler := grpctransport.NewGrpcServer(ctx, endpoints)
+		handler := grpctransport.NewGRPCServer(ctx, endpoints)
 		grpcServer := grpc.NewServer()
 
 		protouser.RegisterUserServer(grpcServer, handler)
