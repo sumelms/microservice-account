@@ -10,6 +10,10 @@ go:
 before_install:
   - curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.34.1
 
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
+
 script:
+  - make lint
   - ./.travis.gofmt.sh
-  - make lint test
+  - ./.travis.test.sh
