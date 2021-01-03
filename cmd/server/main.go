@@ -39,17 +39,19 @@ func main() {
 
 	cfg, err := config.NewConfig(configPath)
 	if err != nil {
-		level.Error(logger).Log("exit", err)
+		_ = level.Error(logger).Log("exit", err)
 		os.Exit(-1)
 	}
 
-	level.Info(logger).Log("msg", "service started")
-	defer level.Info(logger).Log("msg", "service ended")
+	_ = level.Info(logger).Log("msg", "service started")
+	defer func() {
+		_ = level.Info(logger).Log("msg", "service ended")
+	}()
 
 	// Database
 	db, err := database.Connect(cfg.Database)
 	if err != nil {
-		level.Error(logger).Log("exit", err)
+		_ = level.Error(logger).Log("exit", err)
 		os.Exit(-1)
 	}
 
@@ -69,22 +71,22 @@ func main() {
 
 	// HTTP Server
 	go func() {
-		fmt.Println("HTTP Server Listening on", cfg.Server.Http.Host)
+		fmt.Println("HTTP Server Listening on", cfg.Server.HTTP.Host)
 
 		httpServer := httptransport.NewHTTPServer(ctx, endpoints)
 
-		errs <- http.ListenAndServe(cfg.Server.Http.Host, httpServer)
+		errs <- http.ListenAndServe(cfg.Server.HTTP.Host, httpServer)
 	}()
 
 	// gRPC Server
 	go func() {
-		listener, err := net.Listen("tcp", cfg.Server.Grpc.Host)
+		listener, err := net.Listen("tcp", cfg.Server.GRPC.Host)
 		if err != nil {
 			errs <- err
 			return
 		}
 
-		fmt.Println("gRPC Server Listening on", cfg.Server.Grpc.Host)
+		fmt.Println("gRPC Server Listening on", cfg.Server.GRPC.Host)
 
 		handler := grpctransport.NewGRPCServer(ctx, endpoints)
 		grpcServer := grpc.NewServer()
@@ -95,5 +97,5 @@ func main() {
 		errs <- grpcServer.Serve(listener)
 	}()
 
-	level.Error(logger).Log("exit", <-errs)
+	_ = level.Error(logger).Log("exit", <-errs)
 }

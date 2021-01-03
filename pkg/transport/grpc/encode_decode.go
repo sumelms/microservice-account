@@ -19,7 +19,10 @@ func encodeCreateUserResponse(_ context.Context, r interface{}) (interface{}, er
 
 	var user protouser.UserModel
 	data, _ := json.Marshal(res)
-	json.Unmarshal([]byte(data), &user)
+	err := json.Unmarshal([]byte(data), &user)
+	if err != nil {
+		return nil, err
+	}
 
 	return &protouser.CreateUserResponse{User: &user}, nil
 }
@@ -33,7 +36,10 @@ func encodeGetUserResponse(_ context.Context, r interface{}) (interface{}, error
 
 	var user protouser.UserModel
 	data, _ := json.Marshal(res)
-	json.Unmarshal([]byte(data), &user)
+	err := json.Unmarshal([]byte(data), &user)
+	if err != nil {
+		return nil, err
+	}
 
 	return &protouser.GetUserResponse{User: &user}, nil
 }
@@ -51,7 +57,10 @@ func encodeUpdateUserResponse(_ context.Context, r interface{}) (interface{}, er
 
 	var user protouser.UserModel
 	data, _ := json.Marshal(res)
-	json.Unmarshal([]byte(data), &user)
+	err := json.Unmarshal([]byte(data), &user)
+	if err != nil {
+		return nil, err
+	}
 
 	return &protouser.UpdateUserResponse{User: &user}, nil
 }
@@ -73,7 +82,10 @@ func encodeListUsersResponse(c context.Context, r interface{}) (interface{}, err
 
 	var users []*protouser.UserModel
 	data, _ := json.Marshal(res)
-	json.Unmarshal([]byte(data), &users)
+	err := json.Unmarshal([]byte(data), &users)
+	if err != nil {
+		return nil, err
+	}
 
 	return &protouser.ListUsersResponse{Users: users}, nil
 }
