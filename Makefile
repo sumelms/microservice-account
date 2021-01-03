@@ -4,8 +4,9 @@ GOCMD := go
 GORUN := ${GOCMD} run
 GOBUILD := ${GOCMD} build
 GOCLEAN := ${GOCMD} clean
-GOTEST := ${GOCMD} test
+GOTEST := ${GOCMD} test -v -race
 GOGET := ${GOCMD} get
+GOFMT := gofmt
 LINTER := golangci-lint
 
 # Project configuration
@@ -45,6 +46,9 @@ test:
 
 lint:
 	${LINTER} run
+
+format:
+	${GOFMT} -d .
 
 # Docker stuff
 
