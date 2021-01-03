@@ -39,9 +39,9 @@ build-proto:
 
 # Quality tools
 
-test-unit:
+test:
 	${GOTEST} $$(go list ./... | grep -v /test/) $(TEST_OPTIONS)
-.PHONY: test-unit
+.PHONY: test
 
 lint:
 	${LINTER} run
