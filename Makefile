@@ -1,26 +1,52 @@
+# GoLang Commands
+
+GOCMD := go
+GORUN := ${GOCMD} run
+GOBUILD := ${GOCMD} build
+GOCLEAN := ${GOCMD} clean
+GOTEST := ${GOCMD} test
+GOGET := ${GOCMD} get
+LINTER := golangci-lint
+
+# Project configuration
+
 VERSION := $(shell git describe --tags --exact-match 2>/dev/null || echo latest)
 DOCKERHUB_NAMESPACE ?= sumelms
-IMAGE := ${DOCKERHUB_NAMESPACE}/microservice-account:${VERSION}
+MICROSERVICE_NAME := account
+BINARY_NAME := sumelms-${MICROSERVICE_NAME}
+IMAGE := ${DOCKERHUB_NAMESPACE}/microservice-${MICROSERVICE_NAME}:${VERSION}
+
+##############################################################
+
+all: test build
+
+# Runner
 
 run: build-proto
 	export SUMELMS_CONFIG_PATH="./config/config.yml" && \
-	go run cmd/server/main.go
+	${GORUN} cmd/server/main.go
 .PHONY: run
 
-build: build-proto
-	go build -o bin/sumelms-account cmd/server/main.go
-.PHONY: build
+# Builders
 
-test-unit:
-	go test $$(go list ./... | grep -v /test/) $(TEST_OPTIONS)
-.PHONY: test-unit
+build: build-proto
+	${GOBUILD} -o bin/${BINARY_NAME} cmd/server/main.go
+.PHONY: build
 
 build-proto:
 	protoc proto/**/*.proto --go_out=plugins=grpc:.
 .PHONY: build-proto
 
+# Quality tools
+
+test-unit:
+	${GOTEST} $$(go list ./... | grep -v /test/) $(TEST_OPTIONS)
+.PHONY: test-unit
+
 lint:
-	golint $$(go list ./... | grep -v /vendor/)
+	${LINTER} run
+
+# Docker stuff
 
 docker-build:
 	docker build -t ${IMAGE} .
