@@ -79,11 +79,17 @@ func makeCreateUserEndpoint(s user.Service) endpoint.Endpoint {
 			return nil, err
 		}
 
-		data, _ := json.Marshal(req)
 		user := user.User{}
-		json.Unmarshal([]byte(data), &user)
+		data, _ := json.Marshal(req)
+		err := json.Unmarshal([]byte(data), &user)
+		if err != nil {
+			return nil, err
+		}
 
 		ok, err := s.CreateUser(ctx, &user)
+		if err != nil {
+			return nil, err
+		}
 
 		return CreateUserResponse{Id: ok.ID.String()}, err
 	}
@@ -115,9 +121,12 @@ func makeUpdateUserEndpoint(s user.Service) endpoint.Endpoint {
 			return nil, err
 		}
 
-		data, _ := json.Marshal(req)
 		user := user.User{}
-		json.Unmarshal([]byte(data), &user)
+		data, _ := json.Marshal(req)
+		err := json.Unmarshal([]byte(data), &user)
+		if err != nil {
+			return nil, err
+		}
 
 		updated, err := s.UpdateUser(ctx, &user)
 
@@ -138,7 +147,7 @@ func makeDeleteUserEndpoint(s user.Service) endpoint.Endpoint {
 
 		err := s.DeleteUser(ctx, req.Id)
 
-		return DeleteUserResponse{Id: req.Id}, err
+		return request.(DeleteUserResponse), err
 	}
 }
 

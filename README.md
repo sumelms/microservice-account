@@ -3,8 +3,8 @@
 </p>
 
 <p align="center">
-  <a href="https://travis-ci.org/sumelms/microservice-account">
-    <img alt="Travis (.org)" src="https://travis-ci.org/sumelms/microservice-account.svg?branch=main">
+  <a href="https://travis-ci.com/sumelms/microservice-account">
+    <img alt="Travis" src="https://travis-ci.com/sumelms/microservice-account.svg?branch=main">
   </a>  
   <a href="https://codecov.io/gh/sumelms/microservice-account">
     <img src="https://codecov.io/gh/sumelms/backend/microservice-account/main/graph/badge.svg?token=8E92BS3SR9" />
@@ -17,20 +17,20 @@
 
 ## About Sumé LMS
 
-> Note: This repository contains the **account microservice** of the Sumé LMS. If you are looking for more information 
+> Note: This repository contains the **account microservice** of the Sumé LMS. If you are looking for more information
 > about the application, we strongly recommend you to [check the documentation](https://www.sumelms.com/docs).
 
-Sumé LMS is a modern and open-source learning management system that uses modern technologies to deliver performance 
+Sumé LMS is a modern and open-source learning management system that uses modern technologies to deliver performance
 and scalability to your learning environment.
 
-  * Compatible with SCORM and xAPI (TinCan)
-  * Flexible and modular
-  * Open-source and Free
-  * Fast and modern
-  * Easy to install and run
-  * Designed for microservices
-  * REST API based application
-  * and more.
+- Compatible with SCORM and xAPI (TinCan)
+- Flexible and modular
+- Open-source and Free
+- Fast and modern
+- Easy to install and run
+- Designed for microservices
+- REST API based application
+- and more.
 
 ## Table of Contents
 
@@ -68,8 +68,8 @@ It may take a while to download all the dependencies, then you are [ready to bui
 
 ## Building
 
-There are two ways that you can use to build this microservice. The first one will build it using your own machine, 
-while the second one will build it using a docker instance. Also, you can build the docker image to use it with 
+There are two ways that you can use to build this microservice. The first one will build it using your own machine,
+while the second one will build it using a docker instance. Also, you can build the docker image to use it with
 [Docker](https://www.docker.com/) and [Kubernetes](https://kubernetes.io/), but it is up to you.
 
 Here are the following instructions for each available option:
@@ -82,12 +82,12 @@ It should be pretty simple, once all the dependencies are download just run the 
 $ make build
 ```
 
-It will generate an executable file at the `/bin` directory inside the project folder, and If everything works, you can 
+It will generate an executable file at the `/bin` directory inside the project folder, and If everything works, you can
 now [run the microservice](#local-run).
 
 ### Docker build
 
-At this point, I'll assume that you have installed and configure the Docker in your system, but if it is not the case, 
+At this point, I'll assume that you have installed and configure the Docker in your system, but if it is not the case,
 visit the [https://docs.docker.com/get-started/](https://docs.docker.com/get-started/).
 
 ```bash
@@ -102,8 +102,8 @@ OK! Now you build it you need to run the microservice. That should also be prett
 
 ### Local run
 
-If you want to run the microservice locally, you may need to have a **Postgres** instance running and accessible 
-from your machine, and you may need to first [configure it](#configuring). Then you can run it, you just need to 
+If you want to run the microservice locally, you may need to have a **Postgres** instance running and accessible
+from your machine, and you may need to first [configure it](#configuring). Then you can run it, you just need to
 execute the following command:
 
 ```bash
@@ -114,7 +114,7 @@ Once it is running you can test it: http://localhost:8080/health
 
 ### Docker run
 
-If you want to run the microservice using Docker, the easiest way to do it is using docker swarm. 
+If you want to run the microservice using Docker, the easiest way to do it is using docker swarm.
 
 First you need to initialize the docker swarm
 
@@ -122,7 +122,7 @@ First you need to initialize the docker swarm
 $ docker swarm init
 ```
 
-Keep in mind that it will load the `config/config.yml` file from the project. If you want to change some 
+Keep in mind that it will load the `config/config.yml` file from the project. If you want to change some
 configurations you can set the environment variables in your `docker-compose.yml` file, or edit the configuration file.
 
 Once initialized you need to deploy your containers:
@@ -137,7 +137,7 @@ That is it, if everything works it should be now running. You can check it using
 $ docker service ls
 ```
 
-If the services are correctly working you should see two containers running with 1 replica each. Now, you need to get 
+If the services are correctly working you should see two containers running with 1 replica each. Now, you need to get
 the IP address to access the microservice. In order to do it, you can use the following command:
 
 ```bash
@@ -146,13 +146,13 @@ $ docker system info | grep "Node Address"
 
 Once you have the IP address you can now access the endpoint: http://<docker-ip>:8080/health
 
-> NOTE: You can remove/shutdown the deployment with: ```$ docker stack rm sumelms```
+> NOTE: You can remove/shutdown the deployment with: `$ docker stack rm sumelms`
 
 ## Configuring
 
-You can easily configure the application editing the `config/config.yml` file or using environment variables. We do 
-strongly recommend that you use the configuration file instead of the environment variables. Again, it is up to you 
-to decide. If you want to use the variables, be sure to prefix it all with `SUMELMS_`. 
+You can easily configure the application editing the `config/config.yml` file or using environment variables. We do
+strongly recommend that you use the configuration file instead of the environment variables. Again, it is up to you
+to decide. If you want to use the variables, be sure to prefix it all with `SUMELMS_`.
 
 The list of the environment variables and it's default values:
 
@@ -166,8 +166,8 @@ SUMELMS_DATABASE_PASSWORD = nil
 SUMELMS_DATABASE_DATABASE = "sumelms_account"
 ```
 
-> We are using [configuro](https://github.com/sherifabdlnaby/configuro) to manage the configuration, so the precedence 
-> order to configuration is: *Environment variables > .env > Config File > Value set in Struct before loading.*
+> We are using [configuro](https://github.com/sherifabdlnaby/configuro) to manage the configuration, so the precedence
+> order to configuration is: _Environment variables > .env > Config File > Value set in Struct before loading._
 
 ## Testing
 
@@ -179,7 +179,7 @@ $ make test
 
 ## Contributing
 
-Thank you for considering contributing to the project. In order to ensure that the Sumé LMS community is welcome to 
+Thank you for considering contributing to the project. In order to ensure that the Sumé LMS community is welcome to
 all make sure to read our [Contributor Guideline](https://www.sumelms.com/docs/contributing).
 
 ## Team
@@ -197,12 +197,12 @@ all make sure to read our [Contributor Guideline](https://www.sumelms.com/docs/c
 
 ### Discussion
 
-You can reach us or get community support in our [Discord server](https://discord.gg/nRVVeWR). This is the best way to 
+You can reach us or get community support in our [Discord server](https://discord.gg/nRVVeWR). This is the best way to
 find help and get in touch with the community.
 
 ### Bugs or feature requests
 
-If you found a bug or have a feature request, the best way to do 
+If you found a bug or have a feature request, the best way to do
 it is [opening an issue](https://github.com/sumelms/issues).
 
 ## License

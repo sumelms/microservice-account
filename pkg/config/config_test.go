@@ -11,15 +11,29 @@ func TestNewConfig(t *testing.T) {
 	type args struct {
 		configPath string
 	}
+
+	validConfig, _ := NewConfig("config/config.yml")
+
 	tests := []struct {
 		name    string
 		args    args
 		want    *Config
 		wantErr bool
 	}{
-		{name: "Invalid path", args: args{configPath: "config.yml"}, wantErr: true},
-		{name: "Correct path", args: args{configPath: "config/config.yml"}, wantErr: false},
+		{
+			name:    "Invalid path",
+			args:    args{configPath: "config.yml"},
+			want:    nil,
+			wantErr: true,
+		},
+		{
+			name:    "Correct path",
+			args:    args{configPath: "config/config.yml"},
+			want:    validConfig,
+			wantErr: false,
+		},
 	}
+
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			got, err := NewConfig(tt.args.configPath)
