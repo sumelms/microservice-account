@@ -41,6 +41,7 @@ and scalability to your learning environment.
 - [Configuring](#configuring)
 - [Testing](#testing)
 - [Contributing](#contributing)
+- [Code of Conduct](#code-of-conduct)
 - [Team](#team)
 - [Support](#support)
 - [License](#license)
@@ -193,6 +194,11 @@ all make sure to read our [Contributor Guideline](https://www.sumelms.com/docs/c
 
 ...
 
+
+## Code of Conduct
+
+Would you like to contribute and participate in our communities? Please read our [Code of Conduct](https://www.sumelms.com/docs/conduct).
+
 ## Support
 
 ### Discussion
@@ -204,6 +210,7 @@ find help and get in touch with the community.
 
 If you found a bug or have a feature request, the best way to do
 it is [opening an issue](https://github.com/sumelms/issues).
+
 
 ## License
 
