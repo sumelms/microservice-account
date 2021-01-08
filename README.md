@@ -181,7 +181,7 @@ $ make test
 ## Contributing
 
 Thank you for considering contributing to the project. In order to ensure that the Sumé LMS community is welcome to
-all make sure to read our [Contributor Guideline](https://www.sumelms.com/docs/contributing).
+all make sure to read our [Contributor Guideline](https://www.sumelms.com/docs/development/contribute).
 
 ## Team
 
@@ -203,13 +203,13 @@ Would you like to contribute and participate in our communities? Please read our
 
 ### Discussion
 
-You can reach us or get community support in our [Discord server](https://discord.gg/nRVVeWR). This is the best way to
+You can reach us or get community support in our [Discord server](https://discord.gg/PPwvpj8cWJ). This is the best way to
 find help and get in touch with the community.
 
 ### Bugs or feature requests
 
 If you found a bug or have a feature request, the best way to do
-it is [opening an issue](https://github.com/sumelms/issues).
+it is [opening an issue](https://github.com/sumelms).
 
 
 ## License
