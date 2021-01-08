@@ -1,5 +1,5 @@
 <p align="center">
-  <img src=".github/sumelms.png" />
+  <img src=".github/sumelms.svg" />
 </p>
 
 <p align="center">
