@@ -5,16 +5,14 @@ import (
 	"net/http"
 
 	"github.com/sumelms/microservice-account/pkg/endpoint/user"
-	"github.com/sumelms/microservice-account/pkg/middleware"
 
 	httptransport "github.com/go-kit/kit/transport/http"
-	"github.com/gorilla/mux"
+	router "github.com/sumelms/microkit/http"
 )
 
 // NewHTTPServer creates http server router
 func NewHTTPServer(ctx context.Context, endpoints user.Endpoints) http.Handler {
-	r := mux.NewRouter()
-	r.Use(middleware.JsonEncodeMiddleware)
+	r := router.NewRouter()
 
 	r.Methods("POST").Path("/user").Handler(httptransport.NewServer(
 		endpoints.CreateUser,

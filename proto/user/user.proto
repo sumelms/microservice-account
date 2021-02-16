@@ -2,6 +2,8 @@ syntax = "proto3";
 
 package proto;
 
+option go_package = "github.com/sumelms/microservice-account/proto;proto";
+
 service User {
   rpc CreateUser(CreateUserRequest) returns (CreateUserResponse) {}
   rpc GetUser(GetUserRequest) returns (GetUserResponse) {}
