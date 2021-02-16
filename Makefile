@@ -1,13 +1,16 @@
 # GoLang Commands
 
-GOCMD := go
+GOCMD ?= go
 GORUN := ${GOCMD} run
 GOBUILD := ${GOCMD} build
+GOBUILDFLAGS ?= -ldflags="-s -w"
 GOCLEAN := ${GOCMD} clean
 GOTEST := ${GOCMD} test -v -race
 GOGET := ${GOCMD} get
-GOFMT := gofmt
-LINTER := golangci-lint
+GOFMT ?= gofmt
+LINTER ?= golangci-lint
+
+CONTAINERCMD ?= podman
 
 # Project configuration
 
@@ -31,7 +34,7 @@ run:
 # Builders
 
 build: build-proto
-	${GOBUILD} -o bin/${BINARY_NAME} cmd/server/main.go
+	${GOBUILD} ${GOBUILDFLAGS} -o bin/${BINARY_NAME} cmd/server/main.go
 .PHONY: build
 
 build-proto:
@@ -50,13 +53,13 @@ lint:
 format:
 	${GOFMT} -d .
 
-# Docker stuff
+# Container stuff (podman/docker)
 
-docker-build:
-	docker build -t ${IMAGE} .
+container-build:
+	${CONTAINERCMD} build -t ${IMAGE} .
 
-docker-push: docker-build
-	docker push ${IMAGE}
+container-push: container-build
+	${CONTAINERCMD} push ${IMAGE}
 
-docker-run: docker-build
-	docker run -p 8080:8080 ${IMAGE}
+container-run: container-build
+	${CONTAINERCMD} run -p 8080:8080 ${IMAGE}
