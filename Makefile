@@ -15,10 +15,11 @@ CONTAINERCMD ?= podman
 # Project configuration
 
 VERSION := $(shell git describe --tags --exact-match 2>/dev/null || echo latest)
-DOCKERHUB_NAMESPACE ?= sumelms
+IMAGE_NAMESPACE ?= sumelms
 MICROSERVICE_NAME := account
-BINARY_NAME := sumelms-${MICROSERVICE_NAME}
-IMAGE := ${DOCKERHUB_NAMESPACE}/microservice-${MICROSERVICE_NAME}:${VERSION}
+BINARY_NAME := ${IMAGE_NAMESPACE}-${MICROSERVICE_NAME}
+IMAGE := ${IMAGE_NAMESPACE}/microservice-${MICROSERVICE_NAME}:${VERSION}
+CONTAINER_NAME := ${IMAGE_NAMESPACE}_${MICROSERVICE_NAME}
 
 ##############################################################
 
@@ -62,4 +63,4 @@ container-push: container-build
 	${CONTAINERCMD} push ${IMAGE}
 
 container-run: container-build
-	${CONTAINERCMD} run -p 8080:8080 ${IMAGE}
+	${CONTAINERCMD} run -p 8080:8080 --name ${CONTAINER_NAME} ${IMAGE}
