@@ -35,7 +35,7 @@ build: build-proto
 .PHONY: build
 
 build-proto:
-	protoc proto/**/*.proto --go_out=plugins=grpc:.
+	protoc --go-grpc_out=proto --go_out=proto proto/**/*.proto
 .PHONY: build-proto
 
 # Quality tools
@@ -60,3 +60,9 @@ docker-push: docker-build
 
 docker-run: docker-build
 	docker run -p 8080:8080 ${IMAGE}
+
+.PHONY: vendor
+vendor:
+	go mod tidy
+	go mod vendor
+	go mod verify
