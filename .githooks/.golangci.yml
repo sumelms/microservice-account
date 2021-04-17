@@ -75,3 +75,4 @@ run:
     - tests/integration
     - pkg/insights
     - proto
+    - vendor
