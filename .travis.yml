@@ -15,7 +15,6 @@ env:
   - PATH=$HOME/protoc/bin:$PATH GO111MODULE=on
 install:
   - make build-proto
-  - go get ./...
 after_success:
   - bash <(curl -s https://codecov.io/bash)
 script:  
