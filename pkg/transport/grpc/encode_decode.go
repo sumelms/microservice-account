@@ -17,31 +17,31 @@ func decodeCreateUserRequest(_ context.Context, r interface{}) (interface{}, err
 func encodeCreateUserResponse(_ context.Context, r interface{}) (interface{}, error) {
 	res := r.(user.CreateUserResponse)
 
-	var user protouser.UserModel
+	var u protouser.UserModel
 	data, _ := json.Marshal(res)
-	err := json.Unmarshal([]byte(data), &user)
+	err := json.Unmarshal(data, &u)
 	if err != nil {
 		return nil, err
 	}
 
-	return &protouser.CreateUserResponse{User: &user}, nil
+	return &protouser.CreateUserResponse{User: &u}, nil
 }
 
 func decodeGetUserRequest(_ context.Context, r interface{}) (interface{}, error) {
 	req := r.(*protouser.GetUserRequest)
-	return user.GetUserRequest{Id: req.Id}, nil
+	return user.GetUserRequest{ID: req.Id}, nil
 }
 func encodeGetUserResponse(_ context.Context, r interface{}) (interface{}, error) {
 	res := r.(user.GetUserResponse)
 
-	var user protouser.UserModel
+	var u protouser.UserModel
 	data, _ := json.Marshal(res)
-	err := json.Unmarshal([]byte(data), &user)
+	err := json.Unmarshal(data, &u)
 	if err != nil {
 		return nil, err
 	}
 
-	return &protouser.GetUserResponse{User: &user}, nil
+	return &protouser.GetUserResponse{User: &u}, nil
 }
 
 func decodeUpdateUserRequest(_ context.Context, r interface{}) (interface{}, error) {
@@ -55,23 +55,23 @@ func decodeUpdateUserRequest(_ context.Context, r interface{}) (interface{}, err
 func encodeUpdateUserResponse(_ context.Context, r interface{}) (interface{}, error) {
 	res := r.(user.UpdateUserResponse)
 
-	var user protouser.UserModel
+	var u protouser.UserModel
 	data, _ := json.Marshal(res)
-	err := json.Unmarshal([]byte(data), &user)
+	err := json.Unmarshal(data, &u)
 	if err != nil {
 		return nil, err
 	}
 
-	return &protouser.UpdateUserResponse{User: &user}, nil
+	return &protouser.UpdateUserResponse{User: &u}, nil
 }
 
 func decodeDeleteUserRequest(_ context.Context, r interface{}) (interface{}, error) {
 	req := r.(*protouser.DeleteUserRequest)
-	return user.DeleteUserRequest{Id: req.Id}, nil
+	return user.DeleteUserRequest{ID: req.Id}, nil
 }
 func encodeDeleteUserResponse(_ context.Context, r interface{}) (interface{}, error) {
 	res := r.(user.DeleteUserResponse)
-	return &protouser.DeleteUserResponse{Id: res.Id}, nil
+	return &protouser.DeleteUserResponse{Id: res.ID}, nil
 }
 
 func decodeListUsersRequest(_ context.Context, r interface{}) (interface{}, error) {
@@ -82,7 +82,7 @@ func encodeListUsersResponse(c context.Context, r interface{}) (interface{}, err
 
 	var users []*protouser.UserModel
 	data, _ := json.Marshal(res)
-	err := json.Unmarshal([]byte(data), &users)
+	err := json.Unmarshal(data, &users)
 	if err != nil {
 		return nil, err
 	}

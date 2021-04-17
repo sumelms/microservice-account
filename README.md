@@ -40,6 +40,7 @@ and scalability to your learning environment.
 - [Running](#running)
 - [Configuring](#configuring)
 - [Testing](#testing)
+- [Documentation](#documentation)
 - [Contributing](#contributing)
 - [Code of Conduct](#code-of-conduct)
 - [Team](#team)
@@ -177,6 +178,18 @@ You can run all the tests with one single command:
 ```bash
 $ make test
 ```
+
+## Documentation
+
+The complete Sumé LMS documentation can be found in our [official website](https://sumelms.com/docs).
+
+### API
+
+This project uses [Swagger](https://swagger.io/) to generate the API documentation and API mockup, the files can be found  `swagger` directory. 
+
+Sometimes, a microservice can cover more than one domain boundary, in this case, the API scheme should be stored in the same directory indicated above, but following the following filename convention: `<domain-name>-api.yaml`
+
+The best way to edit the API scheme is by using the [Swagger Editor](https://editor.swagger.io/).
 
 ## Contributing
 

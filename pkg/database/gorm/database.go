@@ -2,6 +2,7 @@ package gorm
 
 import (
 	"fmt"
+
 	"github.com/pkg/errors"
 
 	"github.com/jinzhu/gorm"

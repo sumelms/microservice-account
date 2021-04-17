@@ -14,6 +14,8 @@ type server struct {
 	updateUser grpc.Handler
 	deleteUser grpc.Handler
 	listUsers  grpc.Handler
+	// Embed the unimplemented server
+	protouser.UnimplementedUserServer
 }
 
 // NewGRPCServer reates grpc server

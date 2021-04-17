@@ -17,33 +17,33 @@ type (
 		ConfirmPassword string `json:"confirm_password" validate:"required,eqfield=Password"`
 	}
 	CreateUserResponse struct {
-		Id string `json:"id"`
+		ID string `json:"id"`
 	}
 
 	GetUserRequest struct {
-		Id string `json:"id"`
+		ID string `json:"id"`
 	}
 	GetUserResponse struct {
-		Id    string `json:"id"`
+		ID    string `json:"id"`
 		Email string `json:"email"`
 	}
 
 	UpdateUserRequest struct {
-		Id              string `json:"id"`
+		ID              string `json:"id"`
 		Email           string `json:"email" validate:"email"`
 		Password        string `json:"password" validate:"alphanum,min=6"`
 		ConfirmPassword string `json:"confirm_password" validate:"required_with=Password,eqfield=Password"`
 	}
 	UpdateUserResponse struct {
-		Id    string `json:"id"`
+		ID    string `json:"id"`
 		Email string `json:"email"`
 	}
 
 	DeleteUserRequest struct {
-		Id string `json:"id"`
+		ID string `json:"id"`
 	}
 	DeleteUserResponse struct {
-		Id string `json:"id"`
+		ID string `json:"id"`
 	}
 
 	ListUsersRequest  struct{}
@@ -60,7 +60,7 @@ type Endpoints struct {
 	ListUsers  endpoint.Endpoint
 }
 
-func MakeEndpoints(s user.Service) Endpoints {
+func MakeEndpoints(s user.ServiceInterface) Endpoints {
 	return Endpoints{
 		CreateUser: makeCreateUserEndpoint(s),
 		GetUser:    makeGetUserEndpoint(s),
@@ -70,88 +70,88 @@ func MakeEndpoints(s user.Service) Endpoints {
 	}
 }
 
-func makeCreateUserEndpoint(s user.Service) endpoint.Endpoint {
+func makeCreateUserEndpoint(s user.ServiceInterface) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (interface{}, error) {
 		req := request.(CreateUserRequest)
 
-		validator := validator.NewValidator()
-		if err := validator.Validate(req); err != nil {
+		v := validator.NewValidator()
+		if err := v.Validate(req); err != nil {
 			return nil, err
 		}
 
-		user := user.User{}
+		u := user.User{}
 		data, _ := json.Marshal(req)
-		err := json.Unmarshal([]byte(data), &user)
+		err := json.Unmarshal(data, &u)
 		if err != nil {
 			return nil, err
 		}
 
-		ok, err := s.CreateUser(ctx, &user)
+		ok, err := s.CreateUser(ctx, &u)
 		if err != nil {
 			return nil, err
 		}
 
-		return CreateUserResponse{Id: ok.ID.String()}, err
+		return CreateUserResponse{ID: ok.ID.String()}, err
 	}
 }
 
-func makeGetUserEndpoint(s user.Service) endpoint.Endpoint {
+func makeGetUserEndpoint(s user.ServiceInterface) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (interface{}, error) {
 		req := request.(GetUserRequest)
 
-		if req.Id == "" {
+		if req.ID == "" {
 			return nil, errors.New("bad request, missing param id")
 		}
 
-		user, err := s.GetUser(ctx, req.Id)
+		u, err := s.GetUser(ctx, req.ID)
 
 		return GetUserResponse{
-			Id:    user.ID.String(),
-			Email: user.Email,
+			ID:    u.ID.String(),
+			Email: u.Email,
 		}, err
 	}
 }
 
-func makeUpdateUserEndpoint(s user.Service) endpoint.Endpoint {
+func makeUpdateUserEndpoint(s user.ServiceInterface) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (interface{}, error) {
 		req := request.(UpdateUserRequest)
 
-		validator := validator.NewValidator()
-		if err := validator.Validate(req); err != nil {
+		v := validator.NewValidator()
+		if err := v.Validate(req); err != nil {
 			return nil, err
 		}
 
-		user := user.User{}
+		u := user.User{}
 		data, _ := json.Marshal(req)
-		err := json.Unmarshal([]byte(data), &user)
+		err := json.Unmarshal(data, &u)
 		if err != nil {
 			return nil, err
 		}
 
-		updated, err := s.UpdateUser(ctx, &user)
+		updated, err := s.UpdateUser(ctx, &u)
 
 		return UpdateUserResponse{
-			Id:    updated.ID.String(),
+			ID:    updated.ID.String(),
 			Email: updated.Email,
 		}, err
 	}
 }
 
-func makeDeleteUserEndpoint(s user.Service) endpoint.Endpoint {
+func makeDeleteUserEndpoint(s user.ServiceInterface) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (interface{}, error) {
 		req := request.(DeleteUserRequest)
 
-		if req.Id == "" {
+		if req.ID == "" {
 			return nil, errors.New("bad request, missing id param")
 		}
 
-		err := s.DeleteUser(ctx, req.Id)
+		err := s.DeleteUser(ctx, req.ID)
 
 		return request.(DeleteUserResponse), err
 	}
 }
 
-func makeListUsersEndpoint(s user.Service) endpoint.Endpoint {
+func makeListUsersEndpoint(s user.ServiceInterface) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (interface{}, error) {
 		users, err := s.ListUsers(ctx)
 

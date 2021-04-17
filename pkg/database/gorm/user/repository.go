@@ -43,7 +43,7 @@ func (r Repository) GetByID(id string) (*domain.User, error) {
 	query := r.db.Where(whereQuery, id).First(&result)
 
 	if query.RecordNotFound() {
-		return nil, errors.New("User not found")
+		return nil, errors.New("user not found")
 	}
 
 	if err := query.Error; err != nil {
@@ -61,7 +61,7 @@ func (r Repository) Update(entity *domain.User) (*domain.User, error) {
 	query := r.db.Where(whereQuery, id).First(&user)
 
 	if query.RecordNotFound() {
-		return nil, errors.New("User not found")
+		return nil, errors.New("user not found")
 	}
 
 	if entity.Email != "" {
@@ -102,8 +102,8 @@ func (r Repository) GetAll() ([]domain.User, error) {
 
 	users := make([]domain.User, len(results))
 
-	for index, element := range results {
-		users[index] = *toDomainModel(&element)
+	for index := range results {
+		users[index] = *toDomainModel(&results[index])
 	}
 
 	return users, nil

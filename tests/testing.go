@@ -1,3 +1,4 @@
+// nolint: gochecknoinits, dogsled
 package tests
 
 import (
