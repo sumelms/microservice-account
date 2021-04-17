@@ -14,9 +14,9 @@ before_install:
 env:
   - PATH=$HOME/protoc/bin:$PATH GO111MODULE=on
 install:  
+  - make build-proto
   - go get ./...
   - make vendor
-  - make build-proto
   - make lint
   - make test
 after_success:
