@@ -5,7 +5,7 @@ go:
   - '1.15'
   - tip
 before_install:
-  - curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.34.1
+  - curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.39.0
   - curl -L https://github.com/google/protobuf/releases/download/v3.15.7/protoc-3.15.7-linux-x86_64.zip -o /tmp/protoc.zip
   - unzip /tmp/protoc.zip -d "$HOME"/protoc
   - rm /tmp/protoc.zip
