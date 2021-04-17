@@ -66,6 +66,10 @@ precommit: ## Executes the pre-commit hook (check the stashed changes)
 
 .PHONY: lint
 lint: $(GOLANGCI_LINT) ## Executes the linting tool (vet, sec, and others)
+	$(GOLANGCI_LINT) run $(RUN_FLAGS)
+
+.PHONY: lint-fix
+lint: $(GOLANGCI_LINT) ## Executes the linting with fix
 	$(GOLANGCI_LINT) run --fix $(RUN_FLAGS)
 
 $(GOLANGCI_LINT):
