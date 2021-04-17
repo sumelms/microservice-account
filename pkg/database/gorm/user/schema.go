@@ -19,7 +19,7 @@ type User struct {
 }
 
 // BeforeCreate executes a hook before create the database entry
-func (user User) BeforeCreate(scope *gorm.Scope) error {
+func (user *User) BeforeCreate(scope *gorm.Scope) error {
 	id := uuid.New()
 	err := scope.SetColumn("ID", id)
 	if err != nil {

@@ -8,15 +8,13 @@ import (
 
 func NewLogger() log.Logger {
 	var logger log.Logger
-	{
-		logger = log.NewLogfmtLogger(os.Stderr)
-		logger = log.NewSyncLogger(logger)
-		logger = log.With(logger,
-			"service", "sumelms-user",
-			"time:", log.DefaultTimestampUTC,
-			"caller", log.DefaultCaller,
-		)
-	}
+	logger = log.NewLogfmtLogger(os.Stderr)
+	logger = log.NewSyncLogger(logger)
+	logger = log.With(logger,
+		"service", "sumelms-user",
+		"time:", log.DefaultTimestampUTC,
+		"caller", log.DefaultCaller,
+	)
 
 	return logger
 }

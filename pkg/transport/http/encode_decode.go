@@ -26,7 +26,7 @@ func decodeGetUserRequest(_ context.Context, r *http.Request) (interface{}, erro
 	var req user.GetUserRequest
 	vars := mux.Vars(r)
 
-	req = user.GetUserRequest{Id: vars["id"]}
+	req = user.GetUserRequest{ID: vars["id"]}
 
 	return req, nil
 }
@@ -40,7 +40,7 @@ func decodeUpdateUserRequest(_ context.Context, r *http.Request) (interface{}, e
 
 	vars := mux.Vars(r)
 	req = user.UpdateUserRequest{
-		Id:              vars["id"],
+		ID:              vars["id"],
 		Email:           req.Email,
 		Password:        req.Password,
 		ConfirmPassword: req.ConfirmPassword,
@@ -53,7 +53,7 @@ func decodeDeleteUserRequest(_ context.Context, r *http.Request) (interface{}, e
 	var req user.DeleteUserRequest
 	vars := mux.Vars(r)
 
-	req = user.DeleteUserRequest{Id: vars["id"]}
+	req = user.DeleteUserRequest{ID: vars["id"]}
 
 	return req, nil
 }

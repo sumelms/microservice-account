@@ -1,6 +1,6 @@
 package user
 
-type Repository interface {
+type RepositoryInterface interface {
 	Store(user *User) (*User, error)
 	GetByID(id string) (*User, error)
 	Update(user *User) (*User, error)
