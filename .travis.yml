@@ -20,6 +20,5 @@ after_success:
   - bash <(curl -s https://codecov.io/bash)
 script:  
   - make lint
-  - ./.travis.gofmt.sh
-  - ./.travis.test.sh
+  - ./.travis/travis-test.sh
   - make build
