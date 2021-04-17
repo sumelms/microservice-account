@@ -66,7 +66,7 @@ precommit: ## Executes the pre-commit hook (check the stashed changes)
 
 .PHONY: lint
 lint: $(GOLANGCI_LINT) ## Executes the linting tool (vet, sec, and others)
-	$(GOLANGCI_LINT) run $(RUN_FLAGS)
+	$(GOLANGCI_LINT) run --fix $(RUN_FLAGS)
 
 $(GOLANGCI_LINT):
 	./.travis/install-golangci-lint.sh
