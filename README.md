@@ -66,7 +66,7 @@ Access the project folder, and download the Go dependencies
 $ go get ./...
 ```
 
-It may take a while to download all the dependencies, then you are [ready to build](#building) or [run it](#running).
+It may take a while to download all the dependencies, then you are [ready to build](#building).
 
 ## Building
 
